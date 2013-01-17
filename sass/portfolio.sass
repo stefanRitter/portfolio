@@ -1,0 +1,48 @@
+
+@import "base"
+
+/*
+
+//baseline rythm
+@import "compass"
+
+$base-font-size: 18px
+$base-line-height: 30px
++establish-baseline				//output: html{font-size: 112.5%; line-height: 1.667em;}
+
+h1
+	+adjust-font-size-to(50px)	//output: font-size: 2.78 em; line-height: 1.2em;
+	+trailer(2, 50px)
+	+trailing-border(10px, 1, 50px)
+
+blockquote
+	+adjust-font-size-to(20px)
+	+rhythm-borders(2px, 1, 20px)
+
+p
+	+leader(1)
+	+trailer(1)
+
+*/
+
+//mixins
+=button($color)
+  background-color: $color
+  color: contrast-color($color, #111, #eee, 50%)
+
+
+//globals
+$projects: spaceCollective factoreef lucidHaze
+$projColors: pink green white
+
+$projStyles: zip($projects, $projColors)
+
+
+
+@each $style in $projStyles
+	.proj-#{$style}
+		color: scale_color($style, $lightness: 7%)
+
+.projects 
+	float: left
+	width: 100% / length($projects)
