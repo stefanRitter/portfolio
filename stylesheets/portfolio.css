@@ -1,0 +1,85 @@
+/* Global reset
+ * http://meyerweb.com/eric/tools/css/reset/
+ **************************************************************** */
+/* line 15, ../sass/_base.sass */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 22, ../sass/_base.sass */
+html, body {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+}
+
+/* SASS placeholder selector clearfix 
+ * http://sasstwo.codeschool.com/
+ **************************************************************** */
+/* line 32, ../sass/_base.sass */
+.clearfix {
+  zoom: 1;
+}
+/* line 35, ../sass/_base.sass */
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+/* line 39, ../sass/_base.sass */
+.clearfix:after {
+  clear: both;
+}
+
+/* line 44, ../sass/_base.sass */
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 61, ../../../../../.rvm/gems/ruby-1.9.3-p392/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+* html {
+  font-size: 112.5%;
+}
+
+/* line 64, ../../../../../.rvm/gems/ruby-1.9.3-p392/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+html {
+  font-size: 18px;
+  line-height: 1.66667em;
+}
+
+/* line 10, ../sass/portfolio.sass */
+h1 {
+  font-size: 2.77778em;
+  line-height: 1.2em;
+  margin-bottom: 1.2em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.2em;
+  padding-bottom: 0.4em;
+}
+
+/* line 15, ../sass/portfolio.sass */
+blockquote {
+  font-size: 1.11111em;
+  line-height: 1.5em;
+  border-style: solid;
+  border-width: 0.1em;
+  padding: 1.4em;
+}
+
+/* line 19, ../sass/portfolio.sass */
+p {
+  margin-top: 1.66667em;
+  margin-bottom: 1.66667em;
+}
+
+/* line 39, ../sass/portfolio.sass */
+.projects {
+  float: left;
+  width: 33.33333%;
+}
