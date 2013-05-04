@@ -14,7 +14,7 @@
 		<meta name="description" content="Portfolio, work, and projects by Stefan Ritter" />
 		<meta name="author" content="Stefan Ritter" />
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<!-- icons -->
 		<link rel="shortcut icon" href="images/favicon.ico" />
@@ -24,19 +24,10 @@
 		<link href='http://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
 		
 		<!-- styles -->
-		<link href="stylesheets/homepage.css" rel="stylesheet" type="text/css">
-		<link href="stylesheets/animation.css" rel="stylesheet" type="text/css">
-
-		<!-- libs -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script src="javascripts/modernizr.custom.28650.js"></script>
+		<link href="stylesheets/application.css" rel="stylesheet" type="text/css">
 	</head>
-
-	<!--[if lt IE 9 ]> <body class="ie"> <![endif]--> 
-	<!--[if IE 9]>	   <body> <![endif]-->
-	<!--[if !IE]><!-->		
+	
 	<body>				
-		<!--<![endif]-->
 		<div>
 			<header>
 				<h1>index</h1>
@@ -50,7 +41,7 @@
 				</p>
 			</nav>
 
-			<div>
+			<div id="app">
 
 			</div>
 
@@ -60,5 +51,12 @@
 				</p>
 			</footer>
 		</div>
+
+    <!-- libs -->
+    <script src="javascripts/jquery-1.9.1.min.js"></script>
+    <script src="javascripts/json2.js"></script>
+    <script src="javascripts/underscore-min.js"></script>
+    <script src="javascripts/backbone-min.js"></script>
+    <script src="javascripts/application.js"></script>
 	</body>
 </html>
