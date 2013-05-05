@@ -1,103 +1,116 @@
-//(function() {
-
-  // *********************************************************************************************************** MODELS
-  var ProjectModel = Backbone.Model.extend({});
-
-  var ProjectsCollection = Backbone.Collection.extend({
-    url: 'javascripts/projects.js',
-    model: ProjectModel
-  });
-  var projects = new ProjectsCollection();
+/*
+ *
+ *  Hi there, have a look at my source files here:
+ *  https://github.com/stefanRitter/
+ * 
+ *
+ */
 
 
-  // *********************************************************************************************************** VIEWS
-  var ProjectView = Backbone.View.extend({
-    template: _.template('<h2><%= title %></h2>'),
+// *********************************************************************************************************** APP
+var App = new (Backbone.View.extend({
 
-    events: { 'dblclick': 'onClick' },
+  Models: {},
+  Views: {},
+  Collections: {},
 
-    render: function() {
-      this.$el.html( this.template( this.model.toJSON() ) );
-      return this; // method chaining
-    },
+  router: {},
 
-    initialize: function() {
-      // render view when model is changed
-      this.model.on('change', this.render, this);
-    },
+  start: function() {
+    // get project list from server
+    this.projects.fetch({
+      reset: true,
+      success: function(){ App.projects.trigger('init'); },
+      error: function(){ console.log("ERROR: loading projects"); }
+    });
 
-    onClick: function() {
-      portfolioApp.navigate('portfolio/' + this.model.get('id'), {trigger: true});
-    }
-  });
-
-
-  var ProjectListView = Backbone.View.extend({
-
-    initialize: function() {
-      this.listenTo(this.collection, 'add', this.renderOne);
-      this.listenTo(this.collection, 'reset', this.renderAll);
-      this.listenTo(this.collection, 'init', this.render);
-      /*this.collection.on('add', this.renderOne, this);
-      this.collection.on('reset', this.renderAll, this);
-      this.collection.on('init', this.render, this);*/
-    },
-
-    render: function() {
-      this.$el.empty();
-      this.renderAll();
-    },
-
-    renderAll: function() {
-      this.collection.forEach(this.renderOne, this);
-    },
-
-    renderOne: function(project) {
-      var tempView = new ProjectView({model: project});
-      tempView.render();
-      this.$el.append(tempView.el);
-    }
-  });
-  var projectListView = new ProjectListView({collection: projects, el: $('#app')});
+    Backbone.history.start({ pushState: true });
+  }
+}))({el: document.body});
 
 
-  // *********************************************************************************************************** ROUTER
-  var portfolioApp = new (Backbone.Router.extend({
 
-    initialize: function() {
-      // get project list from server
-      projects.fetch({
-        reset: true,
-        success: function(){ projects.trigger('init'); },
-        error: function(){ console.log("ERROR: loading projects"); }
-      });
-    },
+// *********************************************************************************************************** MODELS
+App.Models.Project = Backbone.Model.extend({});
 
-    routes: {
-      "portfolio": "index",
-      "portfolio/:id": "project"
-    },
-
-    index: function() {
-      projectListView.render();
-    },
-
-    project: function(id) {
-      alert('you requested project: ' + id);
-    },
-
-    start: function() {
-      Backbone.history.start({ pushState: true });
-    }
-  }))();
+App.Models.Projects = Backbone.Collection.extend({
+  url: 'javascripts/projects.js',
+  model: App.Models.Project
+});
+App.projects = new App.Models.Projects();
 
 
-  // *********************************************************************************************************** READY
-  // for testing
-  var testProject = new ProjectModel({ id: 1, title: 'test project' });
-  var testView = new ProjectView({ model: testProject });
+// *********************************************************************************************************** VIEWS
+App.Views.Project = Backbone.View.extend({
+  template: _.template('<h2><%= title %></h2>'),
 
-  $(function($) {
-    portfolioApp.start();
-  });
-//}).call(this);
+  events: { 'dblclick': 'onClick' },
+
+  render: function() {
+    this.$el.html( this.template( this.model.toJSON() ) );
+    return this; // method chaining
+  },
+
+  initialize: function() {
+    // render view when model is changed
+    this.model.on('change', this.render, this);
+  },
+
+  onClick: function() {
+    portfolioApp.navigate('portfolio/' + this.model.get('id'), {trigger: true});
+  }
+});
+
+
+App.Views.ProjectList = Backbone.View.extend({
+
+  initialize: function() {
+    this.listenTo(this.collection, 'add', this.renderOne);
+    this.listenTo(this.collection, 'reset', this.renderAll);
+    this.listenTo(this.collection, 'init', this.render);
+  },
+
+  render: function() {
+    this.$el.empty();
+    this.renderAll();
+  },
+
+  renderAll: function() {
+    this.collection.forEach(this.renderOne, this);
+  },
+
+  renderOne: function(project) {
+    var tempView = new App.Views.Project({model: project});
+    tempView.render();
+    this.$el.append(tempView.el);
+  }
+});
+App.projectList = new App.Views.ProjectList({collection: App.projects, el: $('#app')});
+
+
+// *********************************************************************************************************** ROUTER
+App.router = new (Backbone.Router.extend({
+
+  routes: {
+    "portfolio": "index",
+    "portfolio/:id": "project"
+  },
+
+  index: function() {
+    App.projectList.render();
+  },
+
+  project: function(id) {
+    alert('you requested project: ' + id);
+  }
+}))();
+
+
+// *********************************************************************************************************** READY
+// for testing
+//var testProject = new ProjectModel({ id: 1, title: 'test project' });
+//var testView = new ProjectView({ model: testProject });
+
+$(function() {
+  App.start();
+});
