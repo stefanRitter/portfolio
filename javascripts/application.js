@@ -18,6 +18,7 @@
 
     render: function() {
       this.$el.html( this.template( this.model.toJSON() ) );
+      return this; // method chaining
     },
 
     initialize: function() {
@@ -34,13 +35,17 @@
   var ProjectListView = Backbone.View.extend({
 
     initialize: function() {
-      this.collection.on('add', this.renderOne, this);
+      this.listenTo(this.collection, 'add', this.renderOne);
+      this.listenTo(this.collection, 'reset', this.renderAll);
+      this.listenTo(this.collection, 'init', this.render);
+      /*this.collection.on('add', this.renderOne, this);
       this.collection.on('reset', this.renderAll, this);
-      this.collection.on('init', this.render, this);
+      this.collection.on('init', this.render, this);*/
     },
 
     render: function() {
-      $('#app').html(this.el);
+      this.$el.empty();
+      this.renderAll();
     },
 
     renderAll: function() {
@@ -53,13 +58,14 @@
       this.$el.append(tempView.el);
     }
   });
-  var projectListView = new ProjectListView({collection: projects});
+  var projectListView = new ProjectListView({collection: projects, el: $('#app')});
 
 
   // *********************************************************************************************************** ROUTER
   var portfolioApp = new (Backbone.Router.extend({
 
     initialize: function() {
+      // get project list from server
       projects.fetch({
         reset: true,
         success: function(){ projects.trigger('init'); },
