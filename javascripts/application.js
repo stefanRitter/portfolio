@@ -1,19 +1,21 @@
-(function() {
+//(function() {
+
+
+  // *********************************************************************************************************** MODELS
   var ProjectModel = Backbone.Model.extend({});
 
   var ProjectsCollection = Backbone.Collection.extend({
     url: 'javascripts/projects.js',
     model: ProjectModel
   });
-
   var projects = new ProjectsCollection();
-  projects.fetch({ 
-    success: function(){ console.log(projects.toJSON()); }, 
-    error: function(){ console.log("ERROR: loading projects"); } 
-  });
+
+  // for testing
+  var testProject = new ProjectModel({ id: 1, title: 'test project' });
+  var testView = new ProjectView({ model: testProject });
 
 
-
+  // *********************************************************************************************************** VIEWS
   var ProjectView = Backbone.View.extend({
     template: _.template('<h2><%= title %></h2>'),
 
@@ -23,7 +25,7 @@
       this.$el.html( this.template( this.model.toJSON() ) );
     },
 
-    intitialize: function() {
+    initialize: function() {
       // render view when model is changed
       this.model.on('change', this.render, this);
     },
@@ -33,8 +35,20 @@
     }
   });
 
-  var ProjectListView = Backbone.View.extend({
+
+  var projectListView = new (Backbone.View.extend({
+    collection: projects,
+
+    initialize: function() {
+      this.collection.on('add', this.renderOne, this);
+      this.collection.on('reset', this.renderAll, this);
+    },
+
     render: function() {
+      $('#app').html(this.el);
+    },
+
+    renderAll: function() {
       this.collection.forEach(this.renderOne, this);
     },
 
@@ -43,30 +57,25 @@
       tempView.render();
       this.$el.append(tempView.el);
     }
-  });
-  var projectListView = new ProjectListView({
-    collection: projects
+  }))();
+
+  projects.fetch({
+    reset: true,
+    success: function(){ /*console.log(projects.toJSON());*/ },
+    error: function(){ console.log("ERROR: loading projects"); }
   });
 
-  
 
-  // for later
+  // *********************************************************************************************************** ROUTER
   var appRouter = new (Backbone.Router.extend({
     start: function() {
       Backbone.history.start({ pushState: true });
     }
   }))();
 
-  // for testing
-  var testProject = new ProjectModel({ id: 1, title: 'test project' });
-  var testView = new ProjectView({ model: testProject });
-  testView.render();
 
-  // document ready
+  // *********************************************************************************************************** READY
   $(function($) {
 
-    projectListView.render();
-    $('#app').html(projectListView.el);
-
   });
-}).call(this);
+//}).call(this);
