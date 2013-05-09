@@ -1,30 +1,55 @@
 
 @import base
 
+body
+  overflow: hidden
+
+.mainFooter
+  clear: both
+  display: block
+  position: fixed
+  bottom: 1em
+  width:  100%
+  font-family: 'Oxygen Mono', Helvetica, sans-serif
+  font-size: 0.7em
+  text-align: center
+  z-index: 0
+
 #app
-  width: 100%
-  height: 100%
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  height: 85%
+  width:  100%
+  margin: auto
+  z-index: 2
 
 // ********************************************************************************** PROJECT LIST
 .projectList
-  width: 100%
+  width: 90%
   height: 100%
-  overflow: hidden
+  margin: 0 auto
 
 .projectTile
   width: 22.5% // (100% - 10% margins) / 4 projects in a row
-  height: 300px // TODO: set equal to width
+  height: 300px // this gets set equal to width in the code
   overflow: hidden
   float: left
   margin: 1% 1% 1% 1%
-  +transition(all 2s ease-in-out, filter 0.5s ease-in-out)
+  +transition(all 2s ease-in-out)
 
   &:nth-child(4n+1) // 4 projects in a row
     margin-left: 2%
     clear: both
 
-  &:hover
-    +filter(grayscale(100%))
+  &:nth-child(3n+1)
+    position: relative
+    top: 1em
+
+.grayscale
+  +filter(grayscale(100%))
 
 .rotate-crop
   overflow: hidden
@@ -39,6 +64,10 @@
   height: 100%
   +transform-origin(50% 50%)
   +transform(rotate(-45deg))
+
+.unrotate
+  +transform-origin(50% 50%)
+  +transform(rotate(0))
 
 $dist: 2000px
 .moveBottomRight

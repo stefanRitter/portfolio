@@ -8,7 +8,7 @@ app.get('/login', function(request, response) {
   response.send('work in progress');
 });
 
-app.get('/newproject', function(request, response) {
+app.get('/new', function(request, response) {
   response.send('work in progress');
 });
 

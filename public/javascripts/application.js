@@ -16,6 +16,10 @@ var App = new (Backbone.View.extend({
 
   router: {},
 
+  events: { 'keyup': function() {
+    App.router.navigate('portfolio', {trigger: true});
+  }},
+
   start: function() {
     // get project list from server
     this.projects.fetch({
@@ -48,20 +52,64 @@ App.projects = new App.Models.Projects();
 App.Views.Project = Backbone.View.extend({
   template: _.template('<h2><%= title %></h2>'),
 
-  events: { 'dblclick': 'onClick' },
-
-  render: function() {
-    this.$el.html( this.template( this.model.toJSON() ) );
-    return this; // method chaining
-  },
+  events: {},
 
   initialize: function() {
     // render view when model is changed
     this.model.on('change', this.render, this);
   },
 
-  onClick: function() {
-    App.router.navigate('/' + this.model.get('id'), {trigger: true});
+  moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
+  delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
+
+  render: function() {
+    // randomly move other projects off screen
+    var otherProjects = this.$el.siblings();
+    for (var i = 0, len = otherProjects.length; i < len; i++) {
+      $(otherProjects[i]).addClass(this.delayClasses[Math.floor(Math.random()*4)]);
+      $(otherProjects[i]).addClass(this.moveClasses[Math.floor(Math.random()*4)]);
+    }
+
+    // position this one for transition into project view
+    var dX = window.innerWidth/2 - (this.$el.offset().left) - this.el.offsetWidth/2;
+    var dY = window.innerHeight/2 - (this.$el.offset().top) - this.el.offsetHeight/2;
+
+    $('#dynamicStyle').remove();
+
+    var style = $('<style id="dynamicStyle">' +
+                    '.moveCenter {' +
+                    '-webkit-transform-origin: 50% 50% 50%;' +
+                    '-moz-transform-origin: 50% 50% 50%;' +
+                    '-ms-transform-origin: 50% 50% 50%;' +
+                    '-o-transform-origin: 50% 50% 50%;' +
+                    'transform-origin: 50% 50% 50%;' +
+                    '-webkit-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    '-moz-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    '-ms-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    '-o-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    'transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                  '}</style>' );
+
+    $('html > head').append(style);
+    this.$el.addClass('moveCenter');
+    this.$el.addClass('grayscale');
+
+    /*
+    var that = this;
+    setTimeout( function() {
+      that.$el.html( this.template( this.model.toJSON() ) );
+
+      that.el.style.width = window.innerWidth-20 + 'px';
+      that.el.style.height = window.innerHeight-20 + 'px';
+      that.el.style.position = 'fixed';
+      that.el.style.top = '0px';
+      that.el.style.left = '0px';
+
+      // undo rotations
+      that.$el.find('.rotate-crop').removeClass('rotate-crop');
+      that.$el.find('.rotate-back').removeClass('rotate-back');
+    }, 2000);
+    */
   }
 });
 
@@ -80,10 +128,14 @@ App.Views.ProjectTile = Backbone.View.extend({
   initialize: function() {
     // render view when model is changed
     this.model.on('change', this.render, this);
-    this.el.style.height = window.innerWidth/100 * 22.5 + 'px';
+
+    var maxWidth = window.innerWidth - window.innerWidth/10;
+    this.el.style.height = maxWidth/100 * 22.5 + 'px';
 
     this.$el.addClass(this.delayClasses[Math.floor(Math.random()*4)]);
     this.$el.addClass(this.moveClasses[Math.floor(Math.random()*4)]);
+
+    this.el.id = this.model.get('id');
   },
 
   render: function() {
@@ -96,37 +148,6 @@ App.Views.ProjectTile = Backbone.View.extend({
 
   onClick: function(event) {
     event.preventDefault();
-
-    // randomly move other projects off screen
-    var otherProjects = this.$el.siblings();
-
-    for (var i = 0, len = otherProjects.length; i < len; i++) {
-      $(otherProjects[i]).addClass(this.delayClasses[Math.floor(Math.random()*4)]);
-      $(otherProjects[i]).addClass(this.moveClasses[Math.floor(Math.random()*4)]);
-    }
-
-    var dX = window.innerWidth/2 - this.el.offsetLeft - this.el.offsetWidth/2;
-    var dY = window.innerHeight/2 - this.el.offsetTop - this.el.offsetHeight/2;
-
-    $('#dynamicStyle').remove();
-    var style = $('<style id="dynamicStyle">' +
-                    '.moveCenter {' +
-                    '-webkit-transform-origin: 50% 50% 50%;' +
-                    '-moz-transform-origin: 50% 50% 50%;' +
-                    '-ms-transform-origin: 50% 50% 50%;' +
-                    '-o-transform-origin: 50% 50% 50%;' +
-                    'transform-origin: 50% 50% 50%;' +
-                    '-webkit-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
-                    '-moz-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
-                    '-ms-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
-                    '-o-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
-                    'transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
-                  '}</style>' );
-
-    $('html > head').append(style);
-
-    this.$el.addClass('moveCenter');
-
     App.router.navigate('portfolio/' + this.model.get('id'), {trigger: true});
   }
 });
@@ -178,7 +199,8 @@ App.router = new (Backbone.Router.extend({
   },
 
   project: function(id) {
-    console.log(App.projects.get(id));
+    App.project = new App.Views.Project({model: App.projects.get(id), el: $('#'+id)});
+    App.project.render();
   }
 }))();
 
@@ -186,8 +208,4 @@ App.router = new (Backbone.Router.extend({
 // *********************************************************************************************************** READY
 $(function() {
   App.start();
-
-  $(document).on('keyup', function() {
-    App.router.navigate('portfolio', {trigger: true});
-  });
 });
