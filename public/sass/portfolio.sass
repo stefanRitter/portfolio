@@ -1,11 +1,15 @@
 
 @import base
 
+#app
+  width: 100%
+  height: 100%
+
 // ********************************************************************************** PROJECT LIST
 .projectList
-  width: 90%
+  width: 100%
   height: 100%
-  margin: 0 auto
+  overflow: hidden
 
 .projectTile
   width: 22.5% // (100% - 10% margins) / 4 projects in a row
@@ -13,11 +17,14 @@
   overflow: hidden
   float: left
   margin: 1% 1% 1% 1%
-  +transition(all 2s ease-in-out)
+  +transition(all 2s ease-in-out, filter 0.5s ease-in-out)
 
   &:nth-child(4n+1) // 4 projects in a row
     margin-left: 2%
     clear: both
+
+  &:hover
+    +filter(grayscale(100%))
 
 .rotate-crop
   overflow: hidden
@@ -33,6 +40,28 @@
   +transform-origin(50% 50%)
   +transform(rotate(-45deg))
 
-.move
+$dist: 2000px
+.moveBottomRight
   +transform-origin(50% 50%)
-  +transform(translate(50px,100px))
+  +transform(translate($dist,$dist))
+
+.moveTopRight
+  +transform-origin(50% 50%)
+  +transform(translate(-1 * $dist,$dist))
+
+.moveTopLeft
+  +transform-origin(50% 50%)
+  +transform(translate(-1 * $dist,-1 * $dist))
+
+.moveBottomLeft
+  +transform-origin(50% 50%)
+  +transform(translate($dist,-1 * $dist))
+
+.delay1
+  +transition-delay(0.2s)
+.delay2
+  +transition-delay(0.3s)
+.delay3
+  +transition-delay(0.4s)
+.delay4
+  +transition-delay(0.5s)

@@ -20,14 +20,18 @@ var App = new (Backbone.View.extend({
     // get project list from server
     this.projects.fetch({
       reset: true,
-      success: function(){ App.projects.trigger('init'); },
+      success: function() {
+        App.projects.trigger('init');
+        Backbone.history.start({ pushState: true });
+
+        setTimeout( function() {
+          App.router.navigate('portfolio', {trigger: true});
+        }, 200);
+      },
       error: function(){ console.log("ERROR: loading projects"); }
     });
-
-    Backbone.history.start({ pushState: true });
   }
 }))({el: document.body});
-
 
 
 // *********************************************************************************************************** MODELS
@@ -71,22 +75,59 @@ App.Views.ProjectTile = Backbone.View.extend({
                           '</div>' +
                         '</div>'),
 
-  events: { 'click': 'onClick' },
+  events: { 'click': 'onClick', 'dblclick': 'onDblClick' },
+
+  initialize: function() {
+    // render view when model is changed
+    this.model.on('change', this.render, this);
+    this.el.style.height = window.innerWidth/100 * 22.5 + 'px';
+
+    this.$el.addClass(this.delayClasses[Math.floor(Math.random()*4)]);
+    this.$el.addClass(this.moveClasses[Math.floor(Math.random()*4)]);
+  },
 
   render: function() {
     this.$el.html( this.template( this.model.toJSON() ) );
     return this; // method chaining
   },
 
-  initialize: function() {
-    // render view when model is changed
-    this.model.on('change', this.render, this);
-  },
+  moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
+  delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
 
   onClick: function(event) {
     event.preventDefault();
-    this.$el.toggleClass('move');
-    App.router.navigate(this.model.get('id'), {trigger: true});
+
+    // randomly move other projects off screen
+    var otherProjects = this.$el.siblings();
+
+    for (var i = 0, len = otherProjects.length; i < len; i++) {
+      $(otherProjects[i]).addClass(this.delayClasses[Math.floor(Math.random()*4)]);
+      $(otherProjects[i]).addClass(this.moveClasses[Math.floor(Math.random()*4)]);
+    }
+
+    var dX = window.innerWidth/2 - this.el.offsetLeft - this.el.offsetWidth/2;
+    var dY = window.innerHeight/2 - this.el.offsetTop - this.el.offsetHeight/2;
+
+    $('#dynamicStyle').remove();
+    var style = $('<style id="dynamicStyle">' +
+                    '.moveCenter {' +
+                    '-webkit-transform-origin: 50% 50% 50%;' +
+                    '-moz-transform-origin: 50% 50% 50%;' +
+                    '-ms-transform-origin: 50% 50% 50%;' +
+                    '-o-transform-origin: 50% 50% 50%;' +
+                    'transform-origin: 50% 50% 50%;' +
+                    '-webkit-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    '-moz-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    '-ms-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    '-o-transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                    'transform: translate('+dX+'px, '+dY+'px) scale(2.0);' +
+                  '}</style>' );
+
+    $('html > head').append(style);
+
+    this.$el.addClass('moveCenter');
+
+    App.router.navigate('portfolio/' + this.model.get('id'), {trigger: true});
   }
 });
 
@@ -123,16 +164,21 @@ App.projectList = new App.Views.ProjectList({collection: App.projects});
 App.router = new (Backbone.Router.extend({
 
   routes: {
-    "": "index",
-    "/:id": "project"
+    "portfolio": "index",
+    "portfolio/:id": "project"
   },
 
   index: function() {
-    App.projectList.render();
+    // remove all displacement classes
+    $('.moveBottomLeft').removeClass('moveBottomLeft');
+    $('.moveTopRight').removeClass('moveTopRight');
+    $('.moveTopRight').removeClass('moveTopRight');
+    $('.moveBottomRight').removeClass('moveBottomRight');
+    $('.moveCenter').removeClass('moveCenter');
   },
 
   project: function(id) {
-    alert('you requested project: ' + id);
+    console.log(App.projects.get(id));
   }
 }))();
 
@@ -140,4 +186,8 @@ App.router = new (Backbone.Router.extend({
 // *********************************************************************************************************** READY
 $(function() {
   App.start();
+
+  $(document).on('keyup', function() {
+    App.router.navigate('portfolio', {trigger: true});
+  });
 });
