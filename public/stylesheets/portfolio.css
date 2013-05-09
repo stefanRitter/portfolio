@@ -14,7 +14,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 html, body {
   width: 100%;
   height: 100%;
-  font-size: 16px;
 }
 
 /* SASS placeholder selector clearfix 
@@ -42,44 +41,75 @@ html, body {
   clear: both;
 }
 
-/* line 61, ../../../../../.rvm/gems/ruby-1.9.3-p392/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
-* html {
-  font-size: 112.5%;
-}
-
-/* line 64, ../../../../../.rvm/gems/ruby-1.9.3-p392/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
-html {
-  font-size: 18px;
-  line-height: 1.66667em;
+/* line 5, ../sass/portfolio.sass */
+.projectList {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
 }
 
 /* line 10, ../sass/portfolio.sass */
-h1 {
-  font-size: 2.77778em;
-  line-height: 1.2em;
-  margin-bottom: 1.2em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.2em;
-  padding-bottom: 0.4em;
-}
-
-/* line 15, ../sass/portfolio.sass */
-blockquote {
-  font-size: 1.11111em;
-  line-height: 1.5em;
-  border-style: solid;
-  border-width: 0.1em;
-  padding: 1.4em;
-}
-
-/* line 19, ../sass/portfolio.sass */
-p {
-  margin-top: 1.66667em;
-  margin-bottom: 1.66667em;
-}
-
-/* line 39, ../sass/portfolio.sass */
-.projects {
+.projectTile {
+  width: 22.5%;
+  height: 300px;
+  overflow: hidden;
   float: left;
-  width: 33.33333%;
+  margin: 1% 1% 1% 1%;
+  -webkit-transition: all 2s ease-in-out;
+  -moz-transition: all 2s ease-in-out;
+  -o-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
+}
+/* line 18, ../sass/portfolio.sass */
+.projectTile:nth-child(4n+1) {
+  margin-left: 2%;
+  clear: both;
+}
+
+/* line 22, ../sass/portfolio.sass */
+.rotate-crop {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-origin: 50% 50% 50%;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -o-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* line 29, ../sass/portfolio.sass */
+.rotate-back {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-origin: 50% 50% 50%;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -o-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+/* line 36, ../sass/portfolio.sass */
+.move {
+  -webkit-transform-origin: 50% 50% 50%;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -o-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -webkit-transform: translate(50px, 100px);
+  -moz-transform: translate(50px, 100px);
+  -ms-transform: translate(50px, 100px);
+  -o-transform: translate(50px, 100px);
+  transform: translate(50px, 100px);
 }

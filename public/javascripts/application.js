@@ -57,12 +57,42 @@ App.Views.Project = Backbone.View.extend({
   },
 
   onClick: function() {
-    portfolioApp.navigate('portfolio/' + this.model.get('id'), {trigger: true});
+    App.router.navigate('/' + this.model.get('id'), {trigger: true});
+  }
+});
+
+
+App.Views.ProjectTile = Backbone.View.extend({
+  className: 'projectTile',
+
+  template: _.template('<div class="rotate-crop">' +
+                          '<div class="rotate-back">' +
+                            '<img src="<%= titleImage %>" />' +
+                          '</div>' +
+                        '</div>'),
+
+  events: { 'click': 'onClick' },
+
+  render: function() {
+    this.$el.html( this.template( this.model.toJSON() ) );
+    return this; // method chaining
+  },
+
+  initialize: function() {
+    // render view when model is changed
+    this.model.on('change', this.render, this);
+  },
+
+  onClick: function(event) {
+    event.preventDefault();
+    this.$el.toggleClass('move');
+    App.router.navigate(this.model.get('id'), {trigger: true});
   }
 });
 
 
 App.Views.ProjectList = Backbone.View.extend({
+  className: 'projectList',
 
   initialize: function() {
     this.listenTo(this.collection, 'add', this.renderOne);
@@ -73,6 +103,7 @@ App.Views.ProjectList = Backbone.View.extend({
   render: function() {
     this.$el.empty();
     this.renderAll();
+    $('#app').html(this.el);
   },
 
   renderAll: function() {
@@ -80,20 +111,20 @@ App.Views.ProjectList = Backbone.View.extend({
   },
 
   renderOne: function(project) {
-    var tempView = new App.Views.Project({model: project});
+    var tempView = new App.Views.ProjectTile({model: project});
     tempView.render();
     this.$el.append(tempView.el);
   }
 });
-App.projectList = new App.Views.ProjectList({collection: App.projects, el: $('#app')});
+App.projectList = new App.Views.ProjectList({collection: App.projects});
 
 
 // *********************************************************************************************************** ROUTER
 App.router = new (Backbone.Router.extend({
 
   routes: {
-    "portfolio": "index",
-    "portfolio/:id": "project"
+    "": "index",
+    "/:id": "project"
   },
 
   index: function() {
@@ -107,10 +138,6 @@ App.router = new (Backbone.Router.extend({
 
 
 // *********************************************************************************************************** READY
-// for testing
-//var testProject = new ProjectModel({ id: 1, title: 'test project' });
-//var testView = new ProjectView({ model: testProject });
-
 $(function() {
   App.start();
 });

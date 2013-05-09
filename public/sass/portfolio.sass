@@ -1,41 +1,38 @@
 
 @import base
 
+// ********************************************************************************** PROJECT LIST
+.projectList
+  width: 90%
+  height: 100%
+  margin: 0 auto
 
-//baseline rythm
-$base-font-size: 18px
-$base-line-height: 30px
-+establish-baseline       //output: html{font-size: 112.5%; line-height: 1.667em;}
-
-h1
-  +adjust-font-size-to(50px)  //output: font-size: 2.78 em; line-height: 1.2em;
-  +trailer(2, 50px)
-  +trailing-border(10px, 1, 50px)
-
-blockquote
-  +adjust-font-size-to(20px)
-  +rhythm-borders(2px, 1, 20px)
-
-p
-  +leader(1)
-  +trailer(1)
-
-//mixins
-=button($color)
-  background-color: $color
-  color: contrast-color($color, #111, #eee, 50%)
-
-
-//globals
-$projects: spaceCollective factoreef lucidHaze
-$projColors: pink green white
-
-$projStyles: zip($projects, $projColors)
-
-//@each $style in $projStyles
-//  .proj-#{$style}
-//    color: scale_color($style, $lightness: 7%)
-
-.projects 
+.projectTile
+  width: 22.5% // (100% - 10% margins) / 4 projects in a row
+  height: 300px // TODO: set equal to width
+  overflow: hidden
   float: left
-  width: 100% / length($projects)
+  margin: 1% 1% 1% 1%
+  +transition(all 2s ease-in-out)
+
+  &:nth-child(4n+1) // 4 projects in a row
+    margin-left: 2%
+    clear: both
+
+.rotate-crop
+  overflow: hidden
+  width: 100%
+  height: 100%
+  +transform-origin(50% 50%)
+  +transform(rotate(45deg))
+
+.rotate-back
+  overflow: hidden
+  width: 100%
+  height: 100%
+  +transform-origin(50% 50%)
+  +transform(rotate(-45deg))
+
+.move
+  +transform-origin(50% 50%)
+  +transform(translate(50px,100px))
