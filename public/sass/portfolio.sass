@@ -32,6 +32,7 @@ body
   height: 100%
   margin: 0 auto
 
+
 .projectTile
   width: 22.5% // (100% - 10% margins) / 4 projects in a row
   height: 300px // this gets set equal to width in the code
@@ -48,8 +49,10 @@ body
     position: relative
     top: 1em
 
+
 .grayscale
   +filter(grayscale(100%))
+
 
 .rotate-crop
   overflow: hidden
@@ -64,10 +67,11 @@ body
   height: 100%
   +transform-origin(50% 50%)
   +transform(rotate(-45deg))
+  +transition(all 1s ease-in-out)
 
-.unrotate
-  +transform-origin(50% 50%)
-  +transform(rotate(0))
+  img
+    width: 100%
+
 
 $dist: 2000px
 .moveBottomRight

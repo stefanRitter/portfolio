@@ -92,7 +92,7 @@ App.Views.Project = Backbone.View.extend({
 
     $('html > head').append(style);
     this.$el.addClass('moveCenter');
-    this.$el.addClass('grayscale');
+    this.$el.find('.rotate-back').addClass('grayscale');
 
     /*
     var that = this;
