@@ -43,7 +43,6 @@ body
     display: block
     width: 96%
     padding: 2%
-    color: white
 
 %boxmodel
   width: 45%
@@ -56,9 +55,36 @@ body
   @extend %boxmodel
   float: left
 
+.currentImage
+  width: 100%
+  height: 22em
+  text-align: center
+  overflow: hidden
+  img
+    width: 100%
+    height: auto
+    display: inline-block
+
+.thumbnails
+  width: 100%
+  height: 3em
+  overflow: hidden
+  img
+    width: 24.25%
+    padding: 0.5% 0.5% 0 0.5%
+    &:first-child
+      padding-left: 0
+    &:last-child
+      padding-right: 0
+    &:hover
+      +filter(invert(100%))
+
 .description
   @extend %boxmodel
   float: right
+
+.textDesc
+  max-height: 25em
   text-align: justify
   overflow: auto
 

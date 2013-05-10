@@ -19,7 +19,7 @@ var App = new (Backbone.View.extend({
   moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
   delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
 
-  events: { 'keyup': function() {
+  events: { 'click': function() {
     App.router.navigate('portfolio', {trigger: true});
   }},
 
@@ -62,8 +62,8 @@ App.projects = new App.Models.Projects();
 App.Views.Project = Backbone.View.extend({
   template: _.template('<div class="project fadeIn">' +
                           '<h2><%= title %></h2>' +
-                          '<div class="gallery"><%= description %></div>' +
-                          '<div class="description"><%= description %></div>' +
+                          '<div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>' +
+                          '<div class="description"><div class="textDesc"><%= description %></div></div>' +
 
                           '<% if (animation) { %>' +
                             '<div class="animation"><a href="<%= animation %>">view animation</a></div>' +
@@ -73,7 +73,7 @@ App.Views.Project = Backbone.View.extend({
                           '<% } %>' +
                         '</div>'),
 
-  events: {},
+  events: { 'click': function(e) { e.preventDefault(); e.stopPropagation(); }},
 
   images: [],
 
@@ -82,9 +82,11 @@ App.Views.Project = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
 
     // start loading all images from gallery array during transition
-    for (var i = 0, len = this.model.get('gallery').length; i < len; i++) {
+    var gallery = this.model.get('gallery');
+    for (var i = 0, len = gallery.length; i < len; i++) {
       this.images[i] = new Image();
-      this.images[i].src = this.model.gallery[i];
+      this.images[i].src = '../' + gallery[i];
+      this.images[i].onclick = this.switchImage;
     }
   },
 
@@ -131,18 +133,40 @@ App.Views.Project = Backbone.View.extend({
       var that = this;
       setTimeout( function() {
         var html = that.template( that.model.toJSON() );
-        that.$el.parent().append($(html));
+        var proj = $(html);
+        proj.on('click', function(e) { e.preventDefault(); e.stopPropagation(); });
+        that.$el.parent().append(proj);
+
+        var tempImg = new Image();
+        tempImg.src = that.images[0].src;
+        proj.find('.currentImage').append(tempImg);
+
+        for(var i = 0, len = that.images.length; i < len; i++) {
+          proj.find('.thumbnails').append(that.images[i]);
+        }
       }, 2000);
     }
   },
 
+  switchImage: function(e) {
+    var el = e.target || e.srcElement;
+
+    var tempImg = new Image();
+    tempImg.src = el.src;
+    $('.currentImage').addClass('fadeOut');
+
+    setTimeout( function() {
+      $('.currentImage').empty().append(tempImg).removeClass('fadeOut').addClass('fadeIn');
+    }, 500);
+  },
+
   kill: function(callback) {
     $('.project').removeClass('fadeIn').addClass('fadeOut');
-
     setTimeout(function() {
       $('.project').remove();
-      if (callback) { return callback(); }
     }, 500);
+
+    if (callback) { return callback(); }
   }
 });
 
@@ -178,6 +202,7 @@ App.Views.ProjectTile = Backbone.View.extend({
 
   onClick: function(event) {
     event.preventDefault();
+    event.stopPropagation();
     App.router.navigate('portfolio/' + this.model.get('id'), {trigger: true});
   }
 });

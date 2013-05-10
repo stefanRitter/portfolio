@@ -87,10 +87,9 @@ body {
   display: block;
   width: 96%;
   padding: 2%;
-  color: white;
 }
 
-/* line 48, ../sass/portfolio.sass */
+/* line 47, ../sass/portfolio.sass */
 .gallery, .description {
   width: 45%;
   max-height: 25em;
@@ -101,19 +100,64 @@ body {
   background: rgba(172, 172, 172, 0.8);
 }
 
-/* line 55, ../sass/portfolio.sass */
+/* line 54, ../sass/portfolio.sass */
 .gallery {
   float: left;
 }
 
-/* line 59, ../sass/portfolio.sass */
+/* line 58, ../sass/portfolio.sass */
+.currentImage {
+  width: 100%;
+  height: 22em;
+  text-align: center;
+  overflow: hidden;
+}
+/* line 63, ../sass/portfolio.sass */
+.currentImage img {
+  width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+/* line 68, ../sass/portfolio.sass */
+.thumbnails {
+  width: 100%;
+  height: 3em;
+  overflow: hidden;
+}
+/* line 72, ../sass/portfolio.sass */
+.thumbnails img {
+  width: 24.25%;
+  padding: 0.5% 0.5% 0 0.5%;
+}
+/* line 75, ../sass/portfolio.sass */
+.thumbnails img:first-child {
+  padding-left: 0;
+}
+/* line 77, ../sass/portfolio.sass */
+.thumbnails img:last-child {
+  padding-right: 0;
+}
+/* line 79, ../sass/portfolio.sass */
+.thumbnails img:hover {
+  -webkit-filter: invert(100%);
+  -moz-filter: invert(100%);
+  filter: invert(100%);
+}
+
+/* line 82, ../sass/portfolio.sass */
 .description {
   float: right;
+}
+
+/* line 86, ../sass/portfolio.sass */
+.textDesc {
+  max-height: 25em;
   text-align: justify;
   overflow: auto;
 }
 
-/* line 65, ../sass/portfolio.sass */
+/* line 91, ../sass/portfolio.sass */
 .link, .animation {
   width: 45%;
   padding: 1%;
@@ -121,24 +165,24 @@ body {
   text-align: center;
   font-size: 0.8em;
 }
-/* line 72, ../sass/portfolio.sass */
+/* line 98, ../sass/portfolio.sass */
 .link a, .animation a {
   color: black;
 }
 
-/* line 75, ../sass/portfolio.sass */
+/* line 101, ../sass/portfolio.sass */
 .animation {
   float: left;
 }
 
-/* line 81, ../sass/portfolio.sass */
+/* line 107, ../sass/portfolio.sass */
 .projectList {
   width: 90%;
   height: 100%;
   margin: 0 auto;
 }
 
-/* line 86, ../sass/portfolio.sass */
+/* line 112, ../sass/portfolio.sass */
 .projectTile {
   width: 22.5%;
   height: 300px;
@@ -150,25 +194,25 @@ body {
   -o-transition: all 2s ease-in-out;
   transition: all 2s ease-in-out;
 }
-/* line 94, ../sass/portfolio.sass */
+/* line 120, ../sass/portfolio.sass */
 .projectTile:nth-child(4n+1) {
   margin-left: 2%;
   clear: both;
 }
-/* line 98, ../sass/portfolio.sass */
+/* line 124, ../sass/portfolio.sass */
 .projectTile:nth-child(3n+1) {
   position: relative;
   top: 1em;
 }
 
-/* line 102, ../sass/portfolio.sass */
+/* line 128, ../sass/portfolio.sass */
 .grayscale {
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   filter: grayscale(100%);
 }
 
-/* line 105, ../sass/portfolio.sass */
+/* line 131, ../sass/portfolio.sass */
 .rotate-crop {
   overflow: hidden;
   width: 100%;
@@ -185,7 +229,7 @@ body {
   transform: rotate(45deg);
 }
 
-/* line 112, ../sass/portfolio.sass */
+/* line 138, ../sass/portfolio.sass */
 .rotate-back {
   overflow: hidden;
   width: 100%;
@@ -205,12 +249,12 @@ body {
   -o-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
 }
-/* line 120, ../sass/portfolio.sass */
+/* line 146, ../sass/portfolio.sass */
 .rotate-back img {
   width: 100%;
 }
 
-/* line 125, ../sass/portfolio.sass */
+/* line 151, ../sass/portfolio.sass */
 .moveBottomRight {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -224,7 +268,7 @@ body {
   transform: translate(2000px, 2000px);
 }
 
-/* line 129, ../sass/portfolio.sass */
+/* line 155, ../sass/portfolio.sass */
 .moveTopRight {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -238,7 +282,7 @@ body {
   transform: translate(-2000px, 2000px);
 }
 
-/* line 133, ../sass/portfolio.sass */
+/* line 159, ../sass/portfolio.sass */
 .moveTopLeft {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -252,7 +296,7 @@ body {
   transform: translate(-2000px, -2000px);
 }
 
-/* line 137, ../sass/portfolio.sass */
+/* line 163, ../sass/portfolio.sass */
 .moveBottomLeft {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -266,7 +310,7 @@ body {
   transform: translate(2000px, -2000px);
 }
 
-/* line 141, ../sass/portfolio.sass */
+/* line 167, ../sass/portfolio.sass */
 .delay1 {
   -webkit-transition-delay: 0.2s;
   -moz-transition-delay: 0.2s;
@@ -274,7 +318,7 @@ body {
   transition-delay: 0.2s;
 }
 
-/* line 143, ../sass/portfolio.sass */
+/* line 169, ../sass/portfolio.sass */
 .delay2 {
   -webkit-transition-delay: 0.3s;
   -moz-transition-delay: 0.3s;
@@ -282,7 +326,7 @@ body {
   transition-delay: 0.3s;
 }
 
-/* line 145, ../sass/portfolio.sass */
+/* line 171, ../sass/portfolio.sass */
 .delay3 {
   -webkit-transition-delay: 0.4s;
   -moz-transition-delay: 0.4s;
@@ -290,7 +334,7 @@ body {
   transition-delay: 0.4s;
 }
 
-/* line 147, ../sass/portfolio.sass */
+/* line 173, ../sass/portfolio.sass */
 .delay4 {
   -webkit-transition-delay: 0.5s;
   -moz-transition-delay: 0.5s;
