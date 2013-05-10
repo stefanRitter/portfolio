@@ -73,7 +73,7 @@ App.Views.Project = Backbone.View.extend({
                           '<% } %>' +
                         '</div>'),
 
-  events: { 'click': function(e) { e.preventDefault(); e.stopPropagation(); }},
+  events: { 'click': function(e) { e.stopPropagation(); }},
 
   images: [],
 
@@ -134,7 +134,7 @@ App.Views.Project = Backbone.View.extend({
       setTimeout( function() {
         var html = that.template( that.model.toJSON() );
         var proj = $(html);
-        proj.on('click', function(e) { e.preventDefault(); e.stopPropagation(); });
+        proj.on('click', function(e) { e.stopPropagation(); });
         that.$el.parent().append(proj);
 
         var tempImg = new Image();
