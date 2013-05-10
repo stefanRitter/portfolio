@@ -32,7 +32,7 @@ var App = new (Backbone.View.extend({
           App.router.navigate('portfolio', {trigger: true});
         }, 200);
       },
-      error: function(){ console.log("ERROR: loading projects"); }
+      error: function(err){ console.log("ERROR: loading projects"); console.log(err);}
     });
   }
 }))({el: document.body});
@@ -42,7 +42,7 @@ var App = new (Backbone.View.extend({
 App.Models.Project = Backbone.Model.extend({});
 
 App.Models.Projects = Backbone.Collection.extend({
-  url: 'javascripts/projects.js',
+  url: 'javascripts/projects.json',
   model: App.Models.Project
 });
 App.projects = new App.Models.Projects();
@@ -57,6 +57,9 @@ App.Views.Project = Backbone.View.extend({
   initialize: function() {
     // render view when model is changed
     this.model.on('change', this.render, this);
+
+    // start loading all images from gallery array
+    // TODO
   },
 
   moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
