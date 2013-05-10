@@ -56,18 +56,16 @@ App.projects = new App.Models.Projects();
 
 // *********************************************************************************************************** VIEWS
 App.Views.Project = Backbone.View.extend({
-  template: _.template('<div class="project fadeIn">' +
-                          '<h2><%= title %></h2>' +
-                          '<div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>' +
-                          '<div class="description"><div class="textDesc"><%= description %></div></div>' +
+  template: _.template( '<h2><%= title %></h2>' +
+                        '<div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>' +
 
-                          '<% if (animation) { %>' +
-                            '<div class="animation"><a href="<%= animation %>">view animation</a></div>' +
-                          '<% } %>' +
-                          '<% if (link) { %>' +
-                            '<div class="link"><a href="<%= link %>">more information</a></div>' +
-                          '<% } %>' +
-                        '</div>'),
+                        '<div class="description"><div class="textDesc"><%= description %></div></div>' +
+
+                        '<% if (link) { %>' +
+                          '<div class="link"><a href="<%= link %>">more information</a>' +
+                          '<% if (animation) { %> | <a href="<%= animation %>">view animation</a><% } %>' +
+                          '</div>' +
+                        '<% } %>'),
 
   events: { 'click': function(e) { e.stopPropagation(); }},
 
@@ -87,6 +85,31 @@ App.Views.Project = Backbone.View.extend({
   },
 
   render: function() {
+
+    if (this.model.get('id') == 'X') {
+      // TODO: new project view
+      // App.project = new App.Views.NewProjcet({el: this.el});
+      // App.project.render();
+
+    } else {
+
+      var proj = $( this.template( this.model.toJSON() ));
+      proj.find('.gallery').on('click', function(e) { e.stopPropagation(); });
+      proj.find('.description').on('click', function(e) { e.stopPropagation(); });
+      proj.find('.link').on('click', function(e) { e.stopPropagation(); });
+
+      var tempImg = new Image();
+      tempImg.src = this.images[0].src;
+      proj.find('.currentImage').append(tempImg);
+
+      for (var i = 0, len = this.images.length; i < len; i++) {
+        proj.find('.thumbnails').append(this.images[i]);
+      }
+
+      $('.project').empty().append(proj).removeClass('fadeOut').addClass('slowFadeIn');
+      $('.project').css('visibility', 'visible');
+    }
+
     // randomly move other projects off screen
     var otherProjects = this.$el.siblings();
     for (var i = 0, len = otherProjects.length; i < len; i++) {
@@ -117,30 +140,6 @@ App.Views.Project = Backbone.View.extend({
     $('html > head').append(style);
     this.$el.addClass('moveCenter');
     this.$el.find('.rotate-back').addClass('grayscale');
-
-    if (this.model.get('id') == 'X') {
-      // TODO: new project view
-      // App.project = new App.Views.NewProjcet({el: this.el});
-      // App.project.render();
-
-    } else {
-      // wait for transition then show project
-      var that = this;
-      setTimeout( function() {
-        var html = that.template( that.model.toJSON() );
-        var proj = $(html);
-        proj.on('click', function(e) { e.stopPropagation(); });
-        that.$el.parent().append(proj);
-
-        var tempImg = new Image();
-        tempImg.src = that.images[0].src;
-        proj.find('.currentImage').append(tempImg);
-
-        for(var i = 0, len = that.images.length; i < len; i++) {
-          proj.find('.thumbnails').append(that.images[i]);
-        }
-      }, 2100);
-    }
   },
 
   switchImage: function(e) {
@@ -156,11 +155,10 @@ App.Views.Project = Backbone.View.extend({
   },
 
   kill: function(callback) {
-    $('.project').removeClass('fadeIn').addClass('fadeOut');
+    $('.project').removeClass('slowFadeIn').addClass('fadeOut');
     setTimeout(function() {
-      $('.project').remove();
+      $('.project').css('visibility', 'hidden');
     }, 500);
-
     if (callback) { return callback(); }
   }
 });
@@ -214,6 +212,7 @@ App.Views.ProjectList = Backbone.View.extend({
   render: function() {
     this.$el.empty();
     this.renderAll();
+    this.$el.append($('<div class="project"></div>'));
     $('#app').html(this.el);
   },
 
@@ -266,6 +265,7 @@ App.router = new (Backbone.Router.extend({
       App.project = new App.Views.Project({model: App.projects.get(id), el: $('#'+id)});
 
       if (App.firstLoad) {
+        // get project into view
         for (var i = 0, len = App.moveClasses.length; i < len; i++) {
           App.project.$el.removeClass(App.moveClasses[i]);
         }
@@ -274,6 +274,7 @@ App.router = new (Backbone.Router.extend({
       App.project.render();
 
     } else {
+      // not a valid id redirect to index
       App.router.navigate('/', {trigger: true});
     }
   }

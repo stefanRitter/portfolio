@@ -22,6 +22,20 @@
     -webkit-transform: translateX(0)
 
 
+@-webkit-keyframes slowFadeIn
+  0%
+    opacity: 0
+    -webkit-transform: translateX(20px)
+
+  80%
+    opacity: 0.001
+    -webkit-transform: translateX(20px)
+
+  100%
+    opacity: 1
+    -webkit-transform: translateX(0)
+
+
 @-webkit-keyframes fadeOut
   0%
     opacity: 1
@@ -42,6 +56,18 @@
     opacity: 1
     transform: translateX(0)
 
+@keyframes slowFadeIn
+  0%
+    opacity: 0
+    transform: translateX(20px)
+
+  80%
+    opacity: 0.001
+    transform: translateX(20px)
+
+  100%
+    opacity: 1
+    transform: translateX(0)
 
 @keyframes fadeOut
   0%
@@ -56,6 +82,9 @@
 // ********************************************************************************** ANIM SETUP
 .fadeIn
   +animation(fadeIn 0.5s ease-in-out, true)
+
+.slowFadeIn
+  +animation(slowFadeIn 2.5s ease-in-out, true)
 
 .fadeOut
   +animation(fadeOut 0.5s ease-in-out, true)
