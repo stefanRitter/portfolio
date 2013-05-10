@@ -4,6 +4,7 @@ app.use(express.logger());
 app.use(express.static(__dirname + '/public'));
 
 
+/*
 app.get('/login', function(request, response) {
   response.send('work in progress');
 });
@@ -11,6 +12,7 @@ app.get('/login', function(request, response) {
 app.get('/new', function(request, response) {
   response.send('work in progress');
 });
+*/
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {

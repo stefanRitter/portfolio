@@ -1,16 +1,19 @@
 
 @import base
 
+
+// ********************************************************************************** GENERAL
 body
   overflow: hidden
+  position: relative
+  font-family: 'Oxygen Mono', Helvetica, sans-serif
 
 .mainFooter
   clear: both
   display: block
-  position: fixed
+  position: absolute
   bottom: 1em
   width:  100%
-  font-family: 'Oxygen Mono', Helvetica, sans-serif
   font-size: 0.7em
   text-align: center
   z-index: 0
@@ -26,12 +29,55 @@ body
   margin: auto
   z-index: 2
 
+
+// ********************************************************************************** PROJECT
+.project
+  position: absolute
+  top: 2em
+  width: 90%
+  margin: 0 auto
+
+  h2
+    font-size: 2em
+    text-align: center
+    display: block
+    width: 96%
+    padding: 2%
+    color: white
+
+%boxmodel
+  width: 45%
+  max-height: 25em
+  padding: 1%
+  +box-shadow(3px 3px 10px rgba(0, 0, 0, 0.5))
+  background: rgba(172, 172, 172, 0.8)
+
+.gallery
+  @extend %boxmodel
+  float: left
+
+.description
+  @extend %boxmodel
+  float: right
+  text-align: justify
+  overflow: auto
+
+.link
+  width: 45%
+  padding: 1%
+  float: right
+  text-align: center
+  font-size: 0.8em
+
+  a
+    color: black
+
+
 // ********************************************************************************** PROJECT LIST
 .projectList
   width: 90%
   height: 100%
   margin: 0 auto
-
 
 .projectTile
   width: 22.5% // (100% - 10% margins) / 4 projects in a row
@@ -49,10 +95,8 @@ body
     position: relative
     top: 1em
 
-
 .grayscale
   +filter(grayscale(100%))
-
 
 .rotate-crop
   overflow: hidden

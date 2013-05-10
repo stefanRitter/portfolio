@@ -16,6 +16,9 @@ var App = new (Backbone.View.extend({
 
   router: {},
 
+  moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
+  delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
+
   events: { 'keyup': function() {
     App.router.navigate('portfolio', {trigger: true});
   }},
@@ -34,6 +37,13 @@ var App = new (Backbone.View.extend({
       },
       error: function(err){ console.log("ERROR: loading projects"); console.log(err);}
     });
+  },
+
+  removeDisplacement: function() {
+    for (var i = 0, len = this.moveClasses.length; i < len; i++) {
+      $('.' + this.moveClasses[i]).removeClass(this.moveClasses[i]);
+    }
+    $('.moveCenter').removeClass('moveCenter');
   }
 }))({el: document.body});
 
@@ -50,27 +60,36 @@ App.projects = new App.Models.Projects();
 
 // *********************************************************************************************************** VIEWS
 App.Views.Project = Backbone.View.extend({
-  template: _.template('<h2><%= title %></h2>'),
+  template: _.template('<div class="project">' +
+                          '<h2><%= title %></h2>' +
+                          '<div class="gallery"><%= description %></div>' +
+                          '<div class="description"><%= description %></div>' +
+                          '<% if (link) { %>' +
+                          '<div class="link"><a href="<%= link %>">more information</a></div>' +
+                          '<% } %>' +
+                        '</div>'),
 
   events: {},
 
+  images: [],
+
   initialize: function() {
     // render view when model is changed
-    this.model.on('change', this.render, this);
+    this.listenTo(this.model, 'change', this.render);
 
-    // start loading all images from gallery array
-    // TODO
+    // start loading all images from gallery array during transition
+    for (var i = 0, len = this.model.get('gallery').length; i < len; i++) {
+      this.images[i] = new Image();
+      this.images[i].src = this.model.gallery[i];
+    }
   },
-
-  moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
-  delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
 
   render: function() {
     // randomly move other projects off screen
     var otherProjects = this.$el.siblings();
     for (var i = 0, len = otherProjects.length; i < len; i++) {
-      $(otherProjects[i]).addClass(this.delayClasses[Math.floor(Math.random()*4)]);
-      $(otherProjects[i]).addClass(this.moveClasses[Math.floor(Math.random()*4)]);
+      $(otherProjects[i]).addClass(App.delayClasses[Math.floor(Math.random()*4)]);
+      $(otherProjects[i]).addClass(App.moveClasses[Math.floor(Math.random()*4)]);
     }
 
     // position this one for transition into project view
@@ -97,22 +116,22 @@ App.Views.Project = Backbone.View.extend({
     this.$el.addClass('moveCenter');
     this.$el.find('.rotate-back').addClass('grayscale');
 
-    /*
-    var that = this;
-    setTimeout( function() {
-      that.$el.html( this.template( this.model.toJSON() ) );
+    if (this.model.get('id') == 'X') {
+      // TODO: new project view
+      // App.project = new App.Views.NewProjcet({el: this.el});
+      // App.project.render();
+    } else {
+      var html = this.template( this.model.toJSON() );
+      this.$el.parent().append($(html));
+    }
+  },
 
-      that.el.style.width = window.innerWidth-20 + 'px';
-      that.el.style.height = window.innerHeight-20 + 'px';
-      that.el.style.position = 'fixed';
-      that.el.style.top = '0px';
-      that.el.style.left = '0px';
+  kill: function(callback) {
+    $('.project').remove();
 
-      // undo rotations
-      that.$el.find('.rotate-crop').removeClass('rotate-crop');
-      that.$el.find('.rotate-back').removeClass('rotate-back');
-    }, 2000);
-    */
+    if (callback) {
+      return callback();
+    }
   }
 });
 
@@ -130,13 +149,13 @@ App.Views.ProjectTile = Backbone.View.extend({
 
   initialize: function() {
     // render view when model is changed
-    this.model.on('change', this.render, this);
+    this.listenTo(this.model, 'change', this.render);
 
     var maxWidth = window.innerWidth - window.innerWidth/10;
     this.el.style.height = maxWidth/100 * 22.5 + 'px';
 
-    this.$el.addClass(this.delayClasses[Math.floor(Math.random()*4)]);
-    this.$el.addClass(this.moveClasses[Math.floor(Math.random()*4)]);
+    this.$el.addClass(App.delayClasses[Math.floor(Math.random()*4)]);
+    this.$el.addClass(App.moveClasses[Math.floor(Math.random()*4)]);
 
     this.el.id = this.model.get('id');
   },
@@ -145,9 +164,6 @@ App.Views.ProjectTile = Backbone.View.extend({
     this.$el.html( this.template( this.model.toJSON() ) );
     return this; // method chaining
   },
-
-  moveClasses: ['moveBottomRight', 'moveBottomLeft', 'moveTopRight', 'moveTopRight'],
-  delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
 
   onClick: function(event) {
     event.preventDefault();
@@ -188,17 +204,17 @@ App.projectList = new App.Views.ProjectList({collection: App.projects});
 App.router = new (Backbone.Router.extend({
 
   routes: {
-    "portfolio": "index",
-    "portfolio/:id": "project"
+    "portfolio(/)": "index",
+    "portfolio/:id(/)": "project"
   },
 
   index: function() {
-    // remove all displacement classes
-    $('.moveBottomLeft').removeClass('moveBottomLeft');
-    $('.moveTopRight').removeClass('moveTopRight');
-    $('.moveTopRight').removeClass('moveTopRight');
-    $('.moveBottomRight').removeClass('moveBottomRight');
-    $('.moveCenter').removeClass('moveCenter');
+    if (App.project) {
+      App.project.kill( function() { App.removeDisplacement(); } );
+    } else {
+      // remove all displacement classes
+      App.removeDisplacement();
+    }
   },
 
   project: function(id) {
