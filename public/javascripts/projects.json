@@ -20,7 +20,7 @@
 
   {"title": "Space Station", "titleImage": "images/space_title.jpg", "id": "5",
    "link": "http://spacecollective.org/iPenguin/",
-   "gallery": [], "animation": "",
+   "gallery": [], "animation": "http://vimeo.com/26685425",
    "description": "Rethinking architecture without horizon and gravity.\nOn earth movement is always limited to a two dimensional curve, in outer space on the other hand we can move freely in all three dimensions on free form spline curves. The design takes advantage of this by creating a knotted space. The spacial experience is amplified through the form of the apertures. They dramatize the views between the levels of the space station, back down to earth and out into space."},
 
   {"title": "Lucid Haze", "titleImage": "images/lucid_title.jpg", "id": "6", "link": "",

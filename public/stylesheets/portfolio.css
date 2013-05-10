@@ -114,7 +114,7 @@ body {
 }
 
 /* line 65, ../sass/portfolio.sass */
-.link {
+.link, .animation {
   width: 45%;
   padding: 1%;
   float: right;
@@ -122,18 +122,23 @@ body {
   font-size: 0.8em;
 }
 /* line 72, ../sass/portfolio.sass */
-.link a {
+.link a, .animation a {
   color: black;
 }
 
-/* line 77, ../sass/portfolio.sass */
+/* line 75, ../sass/portfolio.sass */
+.animation {
+  float: left;
+}
+
+/* line 81, ../sass/portfolio.sass */
 .projectList {
   width: 90%;
   height: 100%;
   margin: 0 auto;
 }
 
-/* line 82, ../sass/portfolio.sass */
+/* line 86, ../sass/portfolio.sass */
 .projectTile {
   width: 22.5%;
   height: 300px;
@@ -145,25 +150,25 @@ body {
   -o-transition: all 2s ease-in-out;
   transition: all 2s ease-in-out;
 }
-/* line 90, ../sass/portfolio.sass */
+/* line 94, ../sass/portfolio.sass */
 .projectTile:nth-child(4n+1) {
   margin-left: 2%;
   clear: both;
 }
-/* line 94, ../sass/portfolio.sass */
+/* line 98, ../sass/portfolio.sass */
 .projectTile:nth-child(3n+1) {
   position: relative;
   top: 1em;
 }
 
-/* line 98, ../sass/portfolio.sass */
+/* line 102, ../sass/portfolio.sass */
 .grayscale {
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   filter: grayscale(100%);
 }
 
-/* line 101, ../sass/portfolio.sass */
+/* line 105, ../sass/portfolio.sass */
 .rotate-crop {
   overflow: hidden;
   width: 100%;
@@ -180,7 +185,7 @@ body {
   transform: rotate(45deg);
 }
 
-/* line 108, ../sass/portfolio.sass */
+/* line 112, ../sass/portfolio.sass */
 .rotate-back {
   overflow: hidden;
   width: 100%;
@@ -200,12 +205,12 @@ body {
   -o-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
 }
-/* line 116, ../sass/portfolio.sass */
+/* line 120, ../sass/portfolio.sass */
 .rotate-back img {
   width: 100%;
 }
 
-/* line 121, ../sass/portfolio.sass */
+/* line 125, ../sass/portfolio.sass */
 .moveBottomRight {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -219,7 +224,7 @@ body {
   transform: translate(2000px, 2000px);
 }
 
-/* line 125, ../sass/portfolio.sass */
+/* line 129, ../sass/portfolio.sass */
 .moveTopRight {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -233,7 +238,7 @@ body {
   transform: translate(-2000px, 2000px);
 }
 
-/* line 129, ../sass/portfolio.sass */
+/* line 133, ../sass/portfolio.sass */
 .moveTopLeft {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -247,7 +252,7 @@ body {
   transform: translate(-2000px, -2000px);
 }
 
-/* line 133, ../sass/portfolio.sass */
+/* line 137, ../sass/portfolio.sass */
 .moveBottomLeft {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -261,7 +266,7 @@ body {
   transform: translate(2000px, -2000px);
 }
 
-/* line 137, ../sass/portfolio.sass */
+/* line 141, ../sass/portfolio.sass */
 .delay1 {
   -webkit-transition-delay: 0.2s;
   -moz-transition-delay: 0.2s;
@@ -269,7 +274,7 @@ body {
   transition-delay: 0.2s;
 }
 
-/* line 139, ../sass/portfolio.sass */
+/* line 143, ../sass/portfolio.sass */
 .delay2 {
   -webkit-transition-delay: 0.3s;
   -moz-transition-delay: 0.3s;
@@ -277,7 +282,7 @@ body {
   transition-delay: 0.3s;
 }
 
-/* line 141, ../sass/portfolio.sass */
+/* line 145, ../sass/portfolio.sass */
 .delay3 {
   -webkit-transition-delay: 0.4s;
   -moz-transition-delay: 0.4s;
@@ -285,10 +290,82 @@ body {
   transition-delay: 0.4s;
 }
 
-/* line 143, ../sass/portfolio.sass */
+/* line 147, ../sass/portfolio.sass */
 .delay4 {
   -webkit-transition-delay: 0.5s;
   -moz-transition-delay: 0.5s;
   -o-transition-delay: 0.5s;
   transition-delay: 0.5s;
+}
+
+@-webkit-keyframes fadeIn {
+  /* line 16, ../sass/_animation.sass */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+  }
+
+  /* line 20, ../sass/_animation.sass */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  /* line 26, ../sass/_animation.sass */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 30, ../sass/_animation.sass */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+  }
+}
+
+@keyframes fadeIn {
+  /* line 37, ../sass/_animation.sass */
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  /* line 41, ../sass/_animation.sass */
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  /* line 47, ../sass/_animation.sass */
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* line 51, ../sass/_animation.sass */
+  100% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+/* line 57, ../sass/_animation.sass */
+.fadeIn {
+  -webkit-animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* line 60, ../sass/_animation.sass */
+.fadeOut {
+  -webkit-animation: fadeOut 0.5s ease-in-out;
+  animation: fadeOut 0.5s ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }

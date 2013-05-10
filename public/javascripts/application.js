@@ -60,12 +60,16 @@ App.projects = new App.Models.Projects();
 
 // *********************************************************************************************************** VIEWS
 App.Views.Project = Backbone.View.extend({
-  template: _.template('<div class="project">' +
+  template: _.template('<div class="project fadeIn">' +
                           '<h2><%= title %></h2>' +
                           '<div class="gallery"><%= description %></div>' +
                           '<div class="description"><%= description %></div>' +
+
+                          '<% if (animation) { %>' +
+                            '<div class="animation"><a href="<%= animation %>">view animation</a></div>' +
+                          '<% } %>' +
                           '<% if (link) { %>' +
-                          '<div class="link"><a href="<%= link %>">more information</a></div>' +
+                            '<div class="link"><a href="<%= link %>">more information</a></div>' +
                           '<% } %>' +
                         '</div>'),
 
@@ -120,18 +124,25 @@ App.Views.Project = Backbone.View.extend({
       // TODO: new project view
       // App.project = new App.Views.NewProjcet({el: this.el});
       // App.project.render();
+
     } else {
-      var html = this.template( this.model.toJSON() );
-      this.$el.parent().append($(html));
+
+      // wait for transition then show project
+      var that = this;
+      setTimeout( function() {
+        var html = that.template( that.model.toJSON() );
+        that.$el.parent().append($(html));
+      }, 2000);
     }
   },
 
   kill: function(callback) {
-    $('.project').remove();
+    $('.project').removeClass('fadeIn').addClass('fadeOut');
 
-    if (callback) {
-      return callback();
-    }
+    setTimeout(function() {
+      $('.project').remove();
+      if (callback) { return callback(); }
+    }, 500);
   }
 });
 
@@ -210,7 +221,12 @@ App.router = new (Backbone.Router.extend({
 
   index: function() {
     if (App.project) {
-      App.project.kill( function() { App.removeDisplacement(); } );
+
+      App.project.kill( function() {
+        App.project = null;
+        App.removeDisplacement();
+      } );
+
     } else {
       // remove all displacement classes
       App.removeDisplacement();

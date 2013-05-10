@@ -72,6 +72,10 @@ body
   a
     color: black
 
+.animation
+  @extend .link
+  float: left
+
 
 // ********************************************************************************** PROJECT LIST
 .projectList
@@ -142,3 +146,6 @@ $dist: 2000px
   +transition-delay(0.4s)
 .delay4
   +transition-delay(0.5s)
+
+
+@import animation
