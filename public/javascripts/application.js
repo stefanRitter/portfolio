@@ -94,9 +94,13 @@ App.Views.Project = Backbone.View.extend({
     } else {
 
       var proj = $( this.template( this.model.toJSON() ));
-      proj.find('.gallery').on('click', function(e) { e.stopPropagation(); });
-      proj.find('.description').on('click', function(e) { e.stopPropagation(); });
-      proj.find('.link').on('click', function(e) { e.stopPropagation(); });
+
+      // stop propagation
+      $(proj).not('h2').on('click', function(e) { e.stopPropagation(); });
+      var children = proj.children();
+      for(var i = 0, len = children.length; i < len; i++) {
+        $(children[i]).on('click', function(e) { e.stopPropagation(); });
+      }
 
       var tempImg = new Image();
       tempImg.src = this.images[0].src;
@@ -143,6 +147,7 @@ App.Views.Project = Backbone.View.extend({
   },
 
   switchImage: function(e) {
+    e.stopPropagation();
     var el = e.target || e.srcElement;
 
     var tempImg = new Image();
