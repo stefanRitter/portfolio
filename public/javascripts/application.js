@@ -9,6 +9,7 @@
 
 // *********************************************************************************************************** APP
 var App = new (Backbone.View.extend({
+  firstLoad: true,
 
   Models: {},
   Views: {},
@@ -28,12 +29,7 @@ var App = new (Backbone.View.extend({
     this.projects.fetch({
       reset: true,
       success: function() {
-        App.projects.trigger('init');
         Backbone.history.start({ pushState: true });
-
-        setTimeout( function() {
-          App.router.navigate('portfolio', {trigger: true});
-        }, 200);
       },
       error: function(err){ console.log("ERROR: loading projects"); console.log(err);}
     });
@@ -52,7 +48,7 @@ var App = new (Backbone.View.extend({
 App.Models.Project = Backbone.Model.extend({});
 
 App.Models.Projects = Backbone.Collection.extend({
-  url: 'javascripts/projects.json',
+  url: '../javascripts/projects.json',
   model: App.Models.Project
 });
 App.projects = new App.Models.Projects();
@@ -128,7 +124,6 @@ App.Views.Project = Backbone.View.extend({
       // App.project.render();
 
     } else {
-
       // wait for transition then show project
       var that = this;
       setTimeout( function() {
@@ -144,7 +139,7 @@ App.Views.Project = Backbone.View.extend({
         for(var i = 0, len = that.images.length; i < len; i++) {
           proj.find('.thumbnails').append(that.images[i]);
         }
-      }, 2000);
+      }, 2100);
     }
   },
 
@@ -213,8 +208,7 @@ App.Views.ProjectList = Backbone.View.extend({
 
   initialize: function() {
     this.listenTo(this.collection, 'add', this.renderOne);
-    this.listenTo(this.collection, 'reset', this.renderAll);
-    this.listenTo(this.collection, 'init', this.render);
+    this.listenTo(this.collection, 'reset', this.render);
   },
 
   render: function() {
@@ -240,6 +234,7 @@ App.projectList = new App.Views.ProjectList({collection: App.projects});
 App.router = new (Backbone.Router.extend({
 
   routes: {
+    "(/)": "index",
     "portfolio(/)": "index",
     "portfolio/:id(/)": "project"
   },
@@ -252,15 +247,35 @@ App.router = new (Backbone.Router.extend({
         App.removeDisplacement();
       } );
 
-    } else {
+    } else if (!App.firstLoad) {
       // remove all displacement classes
       App.removeDisplacement();
+
+    } else {
+      // this is a first load, wait before zooming projects into view
+      setTimeout( function() {
+        App.removeDisplacement();
+        App.firstLoad = false;
+      }, 200);
     }
   },
 
   project: function(id) {
-    App.project = new App.Views.Project({model: App.projects.get(id), el: $('#'+id)});
-    App.project.render();
+    var num = parseInt(id, 10);
+    if ( id === 'X' || (num >= 0 && num <= App.projects.length-1)) {
+      App.project = new App.Views.Project({model: App.projects.get(id), el: $('#'+id)});
+
+      if (App.firstLoad) {
+        for (var i = 0, len = App.moveClasses.length; i < len; i++) {
+          App.project.$el.removeClass(App.moveClasses[i]);
+        }
+      }
+
+      App.project.render();
+
+    } else {
+      App.router.navigate('/', {trigger: true});
+    }
   }
 }))();
 

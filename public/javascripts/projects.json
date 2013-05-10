@@ -1,32 +1,32 @@
 [
-  {"title": "RT2", "titleImage": "images/RT_title.jpg", "id": "1", "link": "",
-   "gallery": ["images/RT_01.jpg", "images/RT_02.jpg", "images/RT_03.jpg", "images/RT_04.jpg"], "animation": "",
+  {"title": "RT2", "titleImage": "../images/RT_title.jpg", "id": "1", "link": "",
+   "gallery": ["../images/RT_01.jpg", "../images/RT_02.jpg", "../images/RT_03.jpg", "../images/RT_04.jpg"], "animation": "",
    "description": "This project deals with the architectural effects of three distinct surface qualities: clad solids, screened semi solids, and exposed trusses, which are composed over a geometric system with a strong tectonic expression. The consequence is a tension of simultaneous perception of surface figures juxtaposed with geometric volumes. The architecture becomes an aesthetic experience of oscillating volumetric readings throughout the spaces of the building.\nThe terminal is an extension of Riga international airport for airBaltic. The architecture is concentrated on the roof - creating an artificial sky that modulates the spaces of the main hall through its undulations. The geometry condenses at the slowest point of circulation (security check) and expands towards the two gate arms, thus amplifying the circulation flows and simultaneously orientating passengers in the building. The main hall is subdivided into zones of land-side and air-side circulation by the cladding patterns of the roof and broken into rooms by 'fake columns' that replace walls - they come down from the ceiling but don't or just barely touch the ground. The roof includes spaces for longer waiting periods for transfer passengers, with an atmosphere of a semi underwater camera - looking down into the terminal hall, through the structure, and up over the roof scape out to the air planes taking off and landing."},
 
-  {"title": "Bloos", "titleImage": "images/bloos_title.jpg", "id": "2",
+  {"title": "Bloos", "titleImage": "../images/bloos_title.jpg", "id": "2",
    "link": "http://bloosproject.blogspot.com/",
-   "gallery": [], "animation": "",
+   "gallery": ["../images/bloos_01.jpg", "../images/bloos_02.jpg", "../images/bloos_03.jpg", "../images/bloos_04.jpg"], "animation": "",
    "description": "Aesthetic goals are voluptuous interiorities with enigmatic effects, triggered when moving from room to room. Surface languages: A simple surface tessellation leads to an amplified reading of flow and curvature of form. Patterned ornamental tessellations on the other hand undermine a clear reading of the geometry, instead they create dense atmospheric effects."},
 
-  {"title": "PAEA", "titleImage": "images/PAEA_title.jpg", "id": "3",
+  {"title": "PAEA", "titleImage": "../images/paea_title.jpg", "id": "3",
    "link": "http://www.suckerpunchdaily.com/2011/09/05/pan-african-energy-agency/#more-15684",
-   "gallery": [], "animation": "",
+   "gallery": ["../images/paea_01.jpg", "../images/paea_01.jpg", "../images/paea_01.jpg", "../images/paea_01.jpg"], "animation": "",
    "description": "The project researches novel part-to-whole relationships between figure and void and their development into architectural super components. The technique of sub-dividing a singular massing into components allows for spatially differentiated program, while maintaining a coherent whole. The resulting spacial effects are three-dimensionally nested super components that are at the same time separated as well as connected through an urban void.\nThe project is the headquarters for the Pan-African Energy Agency an invented political institution devoted to creating stable and sustainable energy systems for both Africa and Europe. The building is situated in the vacant traffic islands of Vienna’s Mexikoplatz (Vienna is also home to the OPEC and the IAEA). Due to the site’s exposure on two major traffic axes, the goal for the massing was to balance a bold and broadly visible iconic gesture with the different scales of the urban fabric (iconic skyline along the Danube and block-typology towards the city center).  Additional to the political institution the building should become a destination for the public – resulting in six typologically differentiated programmatic units: research tower, convention center, education center and museum, headquarters component, delegations component, and an entry hall component. At strategic moments the components interconnect, e.g. the library connects the research tower to the education center. To achieve civic address each component presents its main space to the city as a crystalline glass volume."},
 
-  {"title": "Factoreef", "titleImage": "images/factoreef_title.jpg", "id": "4",
+  {"title": "Factoreef", "titleImage": "../images/factoreef_title.jpg", "id": "4",
    "link": "http://www.dezeen.com/2008/09/11/factoreef-by-julcsi-futo-bika-rebek-and-stefan-ritter/",
-   "gallery": [], "animation": "",
+   "gallery": ["../images/factoreef_01.jpg", "../images/factoreef_02.jpg", "../images/factoreef_03.jpg", "../images/factoreef_04.jpg"], "animation": "",
    "description": "Playful integration of town and factory.\nThe shipyard is in close proximity to the Croatian town of Crez. The factory is designed as one big exhibition and work space, an open ground plan. Solely the loud and dangerous workshops are isolated. A new spacial experience emerges: the coastline is enhanced through the walkable roof, creating views down into the shipyard, out onto the ocean and back to the town."},
 
-  {"title": "Space Station", "titleImage": "images/space_title.jpg", "id": "5",
+  {"title": "Space Station", "titleImage": "../images/space_title.jpg", "id": "5",
    "link": "http://spacecollective.org/iPenguin/",
-   "gallery": [], "animation": "http://vimeo.com/26685425",
+   "gallery": ["../images/space_01.jpg", "../images/space_02.jpg", "../images/space_03.jpg", "../images/space_04.jpg"], "animation": "http://vimeo.com/26685425",
    "description": "Rethinking architecture without horizon and gravity.\nOn earth movement is always limited to a two dimensional curve, in outer space on the other hand we can move freely in all three dimensions on free form spline curves. The design takes advantage of this by creating a knotted space. The spacial experience is amplified through the form of the apertures. They dramatize the views between the levels of the space station, back down to earth and out into space."},
 
-  {"title": "Lucid Haze", "titleImage": "images/lucid_title.jpg", "id": "6", "link": "",
-   "gallery": [], "animation": "",
+  {"title": "Lucid Haze", "titleImage": "../images/lucid_title.jpg", "id": "6", "link": "",
+   "gallery": ["../images/lucid_01.jpg", "../images/lucid_02.jpg", "../images/lucid_03.jpg", "../images/lucid_04.jpg"], "animation": "",
    "description": "Contemporary space poetics.\nGoal is a choreographed spacial experience. Moving through the installation opens up discussions on the dichotomy of ornament and structure, transitions from inside to outside, and the interweaving of two material languages."},
 
-  {"title": "New Project", "titleImage": "images/new_title.png", "id": "X", "link": "",
+  {"title": "New Project", "titleImage": "../images/new_title.png", "id": "X", "link": "",
    "gallery": [], "animation": "", "description": ""}
 ]
