@@ -9,28 +9,24 @@ $bigbreakpoint: 800px
 // ********************************************************************************** GENERAL
 body
   overflow: hidden
-  position: relative
   font-family: 'Oxygen Mono', Helvetica, sans-serif
+  display: table
+
+.centerVertical
+  display: table-cell
+  vertical-align: middle
 
 .mainFooter
   clear: both
-  display: block
-  position: absolute
-  bottom: 1em
+  padding-top: 4em
   width:  100%
   font-size: 0.7em
   text-align: center
   z-index: 0
 
 #app
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  height: 85%
   width:  100%
-  margin: auto
+  padding: 2em 0 // need extra space due to 1.5em translate of project tiles
   z-index: 2
 
 
@@ -59,7 +55,6 @@ body
     width: 100%
     margin-top: 2%
 
-
 .gallery
   @extend %boxmodel
   float: left
@@ -83,11 +78,9 @@ body
   overflow: hidden
   img
     width: 24.25%
-    padding: 0.5% 0.5% 0 0.5%
-    &:first-child
-      padding-left: 0
-    &:last-child
-      padding-right: 0
+    margin: 0.5% 1% 0 0
+    &:last-of-type
+      margin-right: 0
     &:hover
       +filter(invert(100%))
 
@@ -119,7 +112,6 @@ body
 // ********************************************************************************** PROJECT LIST
 .projectList
   width: 90%
-  height: 100%
   margin: 0 auto
   z-index: 3
 

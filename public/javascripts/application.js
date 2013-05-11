@@ -110,8 +110,10 @@ App.Views.Project = Backbone.View.extend({
         proj.find('.thumbnails').append(this.images[i]);
       }
 
-      $('.project').empty().append(proj).removeClass('fadeOut').addClass('slowFadeIn');
-      $('.project').css('visibility', 'visible');
+      setTimeout(function() {
+        $('.project').empty().append(proj).removeClass('fadeOut').addClass('fadeIn');
+        $('.project').css('visibility', 'visible');
+      }, 2300);
     }
 
     // randomly move other projects off screen
