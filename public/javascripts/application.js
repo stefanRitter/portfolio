@@ -40,6 +40,9 @@ var App = new (Backbone.View.extend({
       $('.' + this.moveClasses[i]).removeClass(this.moveClasses[i]);
     }
     $('.moveCenter').removeClass('moveCenter');
+
+    // wait for end of anim then activate scrolling
+    setTimeout(function() { $('body').css('overflow-y', 'auto'); }, 2300);
   }
 }))({el: document.body});
 
@@ -59,7 +62,9 @@ App.Views.Project = Backbone.View.extend({
   template: _.template( '<h2><%= title %></h2>' +
                         '<div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>' +
 
-                        '<div class="description"><div class="textDesc"><%= description %></div></div>' +
+                        '<div class="description"><div class="textDesc">' +
+                          '<%= description %></div>' +
+                        '</div>' +
 
                         '<% if (link) { %>' +
                           '<div class="link"><a href="<%= link %>">more information</a>' +

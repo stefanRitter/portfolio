@@ -87,19 +87,22 @@ body
 .description
   @extend %boxmodel
   float: right
+  text-align: center
 
   @media (max-width: $bigbreakpoint)
     float: none
 
 .textDesc
   max-height: 25em
+  width: 100%
   text-align: justify
-  overflow: auto
+  overflow-y: auto
 
 .link
+  clear: left
+  float: left
   width: 45%
-  padding: 1%
-  float: right
+  padding-top: 2%
   text-align: center
   font-size: 0.8em
   a

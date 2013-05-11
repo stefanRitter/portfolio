@@ -155,6 +155,7 @@ body {
 /* line 87, ../sass/portfolio.sass */
 .description {
   float: right;
+  text-align: center;
 }
 @media (max-width: 800px) {
   /* line 87, ../sass/portfolio.sass */
@@ -163,41 +164,43 @@ body {
   }
 }
 
-/* line 94, ../sass/portfolio.sass */
+/* line 95, ../sass/portfolio.sass */
 .textDesc {
   max-height: 25em;
+  width: 100%;
   text-align: justify;
-  overflow: auto;
+  overflow-y: auto;
 }
 
-/* line 99, ../sass/portfolio.sass */
+/* line 101, ../sass/portfolio.sass */
 .link {
+  clear: left;
+  float: left;
   width: 45%;
-  padding: 1%;
-  float: right;
+  padding-top: 2%;
   text-align: center;
   font-size: 0.8em;
 }
-/* line 105, ../sass/portfolio.sass */
+/* line 108, ../sass/portfolio.sass */
 .link a {
   color: black;
 }
 @media (max-width: 800px) {
-  /* line 99, ../sass/portfolio.sass */
+  /* line 101, ../sass/portfolio.sass */
   .link {
     float: none;
     width: 100%;
   }
 }
 
-/* line 113, ../sass/portfolio.sass */
+/* line 116, ../sass/portfolio.sass */
 .projectList {
   width: 90%;
   margin: 0 auto;
   z-index: 3;
 }
 
-/* line 118, ../sass/portfolio.sass */
+/* line 121, ../sass/portfolio.sass */
 .projectTile {
   width: 22.5%;
   height: 300px;
@@ -209,41 +212,41 @@ body {
   -o-transition: all 2s ease-in-out;
   transition: all 2s ease-in-out;
 }
-/* line 126, ../sass/portfolio.sass */
+/* line 129, ../sass/portfolio.sass */
 .projectTile:nth-child(4n+1) {
   margin-left: 2%;
   clear: both;
 }
-/* line 130, ../sass/portfolio.sass */
+/* line 133, ../sass/portfolio.sass */
 .projectTile:nth-child(even) {
   position: relative;
   top: 1.5em;
 }
-/* line 133, ../sass/portfolio.sass */
+/* line 136, ../sass/portfolio.sass */
 .projectTile:nth-child(odd) {
   position: relative;
   top: -1.5em;
 }
 @media (max-width: 800px) {
-  /* line 118, ../sass/portfolio.sass */
+  /* line 121, ../sass/portfolio.sass */
   .projectTile {
     width: 47%;
   }
-  /* line 139, ../sass/portfolio.sass */
+  /* line 142, ../sass/portfolio.sass */
   .projectTile:nth-child(2n+1) {
     margin-left: 2%;
     clear: both;
   }
 }
 
-/* line 143, ../sass/portfolio.sass */
+/* line 146, ../sass/portfolio.sass */
 .grayscale {
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   filter: grayscale(100%);
 }
 
-/* line 146, ../sass/portfolio.sass */
+/* line 149, ../sass/portfolio.sass */
 .rotate-crop {
   overflow: hidden;
   width: 100%;
@@ -260,7 +263,7 @@ body {
   transform: rotate(45deg);
 }
 
-/* line 153, ../sass/portfolio.sass */
+/* line 156, ../sass/portfolio.sass */
 .rotate-back {
   overflow: hidden;
   width: 100%;
@@ -280,12 +283,12 @@ body {
   -o-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
 }
-/* line 161, ../sass/portfolio.sass */
+/* line 164, ../sass/portfolio.sass */
 .rotate-back img {
   width: 100%;
 }
 
-/* line 166, ../sass/portfolio.sass */
+/* line 169, ../sass/portfolio.sass */
 .moveBottomRight {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -299,7 +302,7 @@ body {
   transform: translate(2000px, 2000px);
 }
 
-/* line 170, ../sass/portfolio.sass */
+/* line 173, ../sass/portfolio.sass */
 .moveTopRight {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -313,7 +316,7 @@ body {
   transform: translate(-2000px, 2000px);
 }
 
-/* line 174, ../sass/portfolio.sass */
+/* line 177, ../sass/portfolio.sass */
 .moveTopLeft {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -327,7 +330,7 @@ body {
   transform: translate(-2000px, -2000px);
 }
 
-/* line 178, ../sass/portfolio.sass */
+/* line 181, ../sass/portfolio.sass */
 .moveBottomLeft {
   -webkit-transform-origin: 50% 50% 50%;
   -moz-transform-origin: 50% 50% 50%;
@@ -341,7 +344,7 @@ body {
   transform: translate(2000px, -2000px);
 }
 
-/* line 182, ../sass/portfolio.sass */
+/* line 185, ../sass/portfolio.sass */
 .delay1 {
   -webkit-transition-delay: 0.2s;
   -moz-transition-delay: 0.2s;
@@ -349,7 +352,7 @@ body {
   transition-delay: 0.2s;
 }
 
-/* line 184, ../sass/portfolio.sass */
+/* line 187, ../sass/portfolio.sass */
 .delay2 {
   -webkit-transition-delay: 0.3s;
   -moz-transition-delay: 0.3s;
@@ -357,7 +360,7 @@ body {
   transition-delay: 0.3s;
 }
 
-/* line 186, ../sass/portfolio.sass */
+/* line 189, ../sass/portfolio.sass */
 .delay3 {
   -webkit-transition-delay: 0.4s;
   -moz-transition-delay: 0.4s;
@@ -365,7 +368,7 @@ body {
   transition-delay: 0.4s;
 }
 
-/* line 188, ../sass/portfolio.sass */
+/* line 191, ../sass/portfolio.sass */
 .delay4 {
   -webkit-transition-delay: 0.5s;
   -moz-transition-delay: 0.5s;
