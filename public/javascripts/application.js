@@ -30,6 +30,7 @@ var App = new (Backbone.View.extend({
       reset: true,
       success: function() {
         $('.loading').css('display', 'none');
+        setTimeout(function() { $('.mainFooter').addClass('fadeIn'); }, 2400);
         Backbone.history.start({ pushState: true });
       },
       error: function(err){ console.log("ERROR: loading projects"); console.log(err);}
