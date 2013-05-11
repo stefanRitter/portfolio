@@ -22,10 +22,13 @@ html(lang="en")
     link(href='../stylesheets/portfolio.css',rel='stylesheet',type='text/css')
 
   body
+    div.loading
+      img(src="../images/loading.gif",alt="loading...")
+
     div.centerVertical
       div#app
 
-      footer.mainFooter
+      footer.mainFooter.longFadeIn
         p
           | Portfolio is a 
           a(href='http://backbonejs.org/') backbone.js

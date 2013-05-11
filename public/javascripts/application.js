@@ -29,6 +29,7 @@ var App = new (Backbone.View.extend({
     this.projects.fetch({
       reset: true,
       success: function() {
+        $('.loading').css('display', 'none');
         Backbone.history.start({ pushState: true });
       },
       error: function(err){ console.log("ERROR: loading projects"); console.log(err);}
