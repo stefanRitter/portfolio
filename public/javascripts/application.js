@@ -97,7 +97,9 @@ App.Views.NewProjectForm = Backbone.View.extend({
         .mouseup(function (e) {e.preventDefault(); });
 
     $('input[name=save]').on('click', this.save);
-    $('input[name=cancel]').on('click', function() { App.router.navigate('portfolio', {trigger: true}); });
+    $('input[name=cancel]').on('click', function() {
+      $('.projectTile.fade').removeClass('fade');
+      App.router.navigate('portfolio', {trigger: true}); });
 
     return this;
   },
@@ -105,8 +107,37 @@ App.Views.NewProjectForm = Backbone.View.extend({
   save: function(e) {
     e.stopPropagation();
     e.preventDefault();
-    alert('you just saved a new project');
-    App.router.navigate('portfolio', {trigger: true});
+
+    var description = _.escape($('textarea').val()),
+        title = _.escape($('input[name=title]').val()),
+        link = _.escape($('input[name=link]').val()),
+        animation = _.escape($('input[name=animation]').val()),
+        id = App.projects.length;
+
+    // TODO: tell user to fill in title and desc
+    if (!title || title === "click here to enter a new title") return;
+    if (!description || description === "enter the project's description here") return;
+
+    // TODO: check URLs
+    //var urlRegex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+    //if (! link.match(urlRegex)) link = '';
+    //if (! animation.match(urlRegex)) animation = '';
+
+    var newProj = new App.Models.Project();
+    newProj.set({
+      'id': id, 'title': title, 'description': description, 'link': link, 'animation': animation,
+      'gallery': ["../images/temp_title.jpg", "../images/temp_title.jpg", "../images/temp_title.jpg", "../images/temp_title.jpg"],
+      'titleImage': '../images/temp_title.jpg' });
+
+    App.projects.add(newProj);
+
+    setTimeout( function() {
+
+      // TODO: HTTP.POST
+      // newProj.save();
+      App.router.navigate('portfolio', {trigger: true});
+      $('.projectTile.fade').removeClass('fade');
+    }, 500);
   },
 
   kill: function(callback) {
@@ -149,12 +180,16 @@ App.Views.Project = Backbone.View.extend({
 
   render: function() {
 
+    $('html, body').animate({ scrollTop: 0 }, 'slow');
+
     if (this.model.get('id') == 'X') {
 
       // load the new project form
       App.project = new App.Views.NewProjectForm({model: this.model});
 
+      var tile = this.$el;
       setTimeout(function() {
+        tile.addClass('fade');
         App.project.render();
       }, 2300);
 
@@ -169,9 +204,11 @@ App.Views.Project = Backbone.View.extend({
         $(children[i]).on('click', function(e) { e.stopPropagation(); });
       }
 
-      var tempImg = new Image();
-      tempImg.src = this.images[0].src;
-      proj.find('.currentImage').append(tempImg);
+      if (this.images.length > 0) {
+        var tempImg = new Image();
+        tempImg.src = this.images[0].src;
+        proj.find('.currentImage').append(tempImg);
+      }
 
       for (var i = 0, len = this.images.length; i < len; i++) {
         proj.find('.thumbnails').append(this.images[i]);
@@ -244,7 +281,7 @@ App.Views.ProjectTile = Backbone.View.extend({
                           '</div>' +
                         '</div>'),
 
-  events: { 'click': 'onClick', 'dblclick': 'onDblClick' },
+  events: { 'click': 'onClick' },
 
   initialize: function() {
     // render view when model is changed
@@ -296,7 +333,13 @@ App.Views.ProjectList = Backbone.View.extend({
   renderOne: function(project) {
     var tempView = new App.Views.ProjectTile({model: project});
     tempView.render();
-    this.$el.append(tempView.el);
+
+    if ($('.project').length > 0) {
+      // this a new project
+      this.$el.prepend(tempView.el);
+    } else {
+      this.$el.append(tempView.el);
+    }
   }
 });
 App.projectList = new App.Views.ProjectList({collection: App.projects});

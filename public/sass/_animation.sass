@@ -12,6 +12,16 @@
 
 
 // ********************************************************************************** ANIM DEF -webkit-
+@-webkit-keyframes fade
+  0%
+    opacity: 1
+    visibility: visible
+
+  100%
+    opacity: 0
+    visibility: hidden
+
+
 @-webkit-keyframes fadeIn
   0%
     opacity: 0
@@ -59,9 +69,22 @@
     visibility: hidden
 
 
+@keyframes fade
+  0%
+    opacity: 1
+    visibility: visible
+
+  100%
+    opacity: 0
+    visibility: hidden
+
+
 // ********************************************************************************** ANIM SETUP
 .fadeIn
   +animation(fadeIn 0.5s ease-in-out, true)
 
 .fadeOut
   +animation(fadeOut 0.5s ease-in-out, true)
+
+.fade
+  +animation(fade 0.5s ease-in-out, true)

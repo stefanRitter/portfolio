@@ -443,15 +443,29 @@ body {
   transition-delay: 0.5s;
 }
 
-@-webkit-keyframes fadeIn {
+@-webkit-keyframes fade {
   /* line 16, ../sass/_animation.sass */
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* line 20, ../sass/_animation.sass */
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  /* line 26, ../sass/_animation.sass */
   0% {
     opacity: 0;
     -webkit-transform: translateX(20px);
     visibility: visible;
   }
 
-  /* line 21, ../sass/_animation.sass */
+  /* line 31, ../sass/_animation.sass */
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -460,13 +474,13 @@ body {
 }
 
 @-webkit-keyframes fadeOut {
-  /* line 28, ../sass/_animation.sass */
+  /* line 38, ../sass/_animation.sass */
   0% {
     opacity: 1;
     -webkit-transform: translateX(0);
   }
 
-  /* line 32, ../sass/_animation.sass */
+  /* line 42, ../sass/_animation.sass */
   100% {
     opacity: 0;
     -webkit-transform: translateX(-20px);
@@ -475,14 +489,14 @@ body {
 }
 
 @keyframes fadeIn {
-  /* line 40, ../sass/_animation.sass */
+  /* line 50, ../sass/_animation.sass */
   0% {
     opacity: 0;
     transform: translateX(20px);
     visibility: visible;
   }
 
-  /* line 45, ../sass/_animation.sass */
+  /* line 55, ../sass/_animation.sass */
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -491,13 +505,13 @@ body {
 }
 
 @keyframes fadeOut {
-  /* line 52, ../sass/_animation.sass */
+  /* line 62, ../sass/_animation.sass */
   0% {
     opacity: 1;
     transform: translateX(0);
   }
 
-  /* line 56, ../sass/_animation.sass */
+  /* line 66, ../sass/_animation.sass */
   100% {
     opacity: 0;
     transform: translateX(-20px);
@@ -505,7 +519,21 @@ body {
   }
 }
 
-/* line 63, ../sass/_animation.sass */
+@keyframes fade {
+  /* line 73, ../sass/_animation.sass */
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* line 77, ../sass/_animation.sass */
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* line 83, ../sass/_animation.sass */
 .fadeIn {
   -webkit-animation: fadeIn 0.5s ease-in-out;
   animation: fadeIn 0.5s ease-in-out;
@@ -513,10 +541,18 @@ body {
   animation-fill-mode: forwards;
 }
 
-/* line 66, ../sass/_animation.sass */
+/* line 86, ../sass/_animation.sass */
 .fadeOut {
   -webkit-animation: fadeOut 0.5s ease-in-out;
   animation: fadeOut 0.5s ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* line 89, ../sass/_animation.sass */
+.fade {
+  -webkit-animation: fade 0.5s ease-in-out;
+  animation: fade 0.5s ease-in-out;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
