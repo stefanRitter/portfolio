@@ -184,9 +184,6 @@ App.Views.ProjectTile = Backbone.View.extend({
     // render view when model is changed
     this.listenTo(this.model, 'change', this.render);
 
-    var maxWidth = window.innerWidth - window.innerWidth/10;
-    this.el.style.height = maxWidth/100 * 22.5 + 'px';
-
     this.$el.addClass(App.delayClasses[Math.floor(Math.random()*4)]);
     this.$el.addClass(App.moveClasses[Math.floor(Math.random()*4)]);
 
@@ -195,6 +192,11 @@ App.Views.ProjectTile = Backbone.View.extend({
 
   render: function() {
     this.$el.html( this.template( this.model.toJSON() ) );
+
+    var maxWidth = window.innerWidth - window.innerWidth/10,
+        percentage = (window.innerWidth <= 800) ? 47 : 22.5;
+    this.el.style.height = maxWidth/100 * percentage + 'px';
+
     return this; // method chaining
   },
 
