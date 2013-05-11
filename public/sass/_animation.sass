@@ -16,10 +16,12 @@
   0%
     opacity: 0
     -webkit-transform: translateX(20px)
+    visibility: visible
 
   100%
     opacity: 1
     -webkit-transform: translateX(0)
+    visibility: visible
 
 
 @-webkit-keyframes fadeOut
@@ -30,6 +32,7 @@
   100%
     opacity: 0
     -webkit-transform: translateX(-20px)
+    visibility: hidden
 
 
 // ********************************************************************************** ANIM DEF W3C
@@ -37,10 +40,12 @@
   0%
     opacity: 0
     transform: translateX(20px)
+    visibility: visible
 
   100%
     opacity: 1
     transform: translateX(0)
+    visibility: visible
 
 
 @keyframes fadeOut
@@ -51,6 +56,7 @@
   100%
     opacity: 0
     transform: translateX(-20px)
+    visibility: hidden
 
 
 // ********************************************************************************** ANIM SETUP

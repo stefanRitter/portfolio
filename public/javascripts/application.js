@@ -21,6 +21,10 @@ var App = new (Backbone.View.extend({
   delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
 
   events: { 'click': function() {
+    if (App.project) {
+      // if user is making a new project stay in form
+      if(App.project.model.get('id') == 'X') return;
+    }
     App.router.navigate('portfolio', {trigger: true});
   }},
 
@@ -60,6 +64,58 @@ App.projects = new App.Models.Projects();
 
 
 // *********************************************************************************************************** VIEWS
+App.Views.NewProjectForm = Backbone.View.extend({
+  template: _.template( '<form class="newProjectForm">' +
+                          '<input type="text" name=title value="<%= title %>" class="newTitle"/>' +
+
+                          '<div class="gallery"><div class="currentImage">' +
+                            "Drag images into this area to upload" +
+                          '</div><div class="thumbnails"></div></div>' +
+
+                          '<div class="description">' +
+                            '<textarea class="descField" name=description><%= description %></textarea>' +
+                          '</div>' +
+
+                          '<div class="link">' +
+                            '<input type="text" name=link value="<%= link %>" /> | ' +
+                            '<input type="text" name=animation value="<%= animation %>" />' +
+                          '</div>' +
+
+                          '<input type="button" name="save" value="Save"/><input type="button"  name="cancel" value="Cancel"/>' +
+                        '</form>'),
+
+  render: function(){
+    this.$el.html(this.template(this.model.attributes));
+
+    $('.project').empty().append(this.$el);
+    $('.project').removeClass('fadeOut').addClass('fadeIn');
+    $('.newProjectForm').on('click', function(e) { e.stopPropagation(); });
+
+    // automatically select content
+    $("input:text, textarea")
+        .focus(function () { $(this).select(); } )
+        .mouseup(function (e) {e.preventDefault(); });
+
+    $('input[name=save]').on('click', this.save);
+    $('input[name=cancel]').on('click', function() { App.router.navigate('portfolio', {trigger: true}); });
+
+    return this;
+  },
+
+  save: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    alert('you just saved a new project');
+    App.router.navigate('portfolio', {trigger: true});
+  },
+
+  kill: function(callback) {
+    $('.project').removeClass('slowFadeIn').addClass('fadeOut');
+    if (callback) { return callback(); }
+  }
+});
+
+
 App.Views.Project = Backbone.View.extend({
   template: _.template( '<h2><%= title %></h2>' +
                         '<div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>' +
@@ -94,9 +150,13 @@ App.Views.Project = Backbone.View.extend({
   render: function() {
 
     if (this.model.get('id') == 'X') {
-      // TODO: new project view
-      // App.project = new App.Views.NewProjcet({el: this.el});
-      // App.project.render();
+
+      // load the new project form
+      App.project = new App.Views.NewProjectForm({model: this.model});
+
+      setTimeout(function() {
+        App.project.render();
+      }, 2300);
 
     } else {
 
@@ -118,8 +178,8 @@ App.Views.Project = Backbone.View.extend({
       }
 
       setTimeout(function() {
-        $('.project').empty().append(proj).removeClass('fadeOut').addClass('fadeIn');
-        $('.project').css('visibility', 'visible');
+        $('.project').empty().append(proj);
+        $('.project').removeClass('fadeOut').addClass('fadeIn');
       }, 2300);
     }
 
@@ -169,10 +229,7 @@ App.Views.Project = Backbone.View.extend({
   },
 
   kill: function(callback) {
-    $('.project').removeClass('slowFadeIn').addClass('fadeOut');
-    setTimeout(function() {
-      $('.project').css('visibility', 'hidden');
-    }, 500);
+    $('.project').removeClass('fadeIn').addClass('fadeOut');
     if (callback) { return callback(); }
   }
 });
@@ -251,7 +308,8 @@ App.router = new (Backbone.Router.extend({
   routes: {
     "(/)": "index",
     "portfolio(/)": "index",
-    "portfolio/:id(/)": "project"
+    "portfolio/:id(/)": "project",
+    "(/)*path": "index"
   },
 
   index: function() {
