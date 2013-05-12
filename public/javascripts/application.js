@@ -69,7 +69,7 @@ App.Views.NewProjectForm = Backbone.View.extend({
                           '<input type="text" name=title value="<%= title %>" class="newTitle"/>' +
 
                           '<div class="gallery"><div class="currentImage">' +
-                            "Drag images into this area to upload" +
+                            "Drag images into this area to upload (not implemented yet)" +
                           '</div><div class="thumbnails"></div></div>' +
 
                           '<div class="description">' +
