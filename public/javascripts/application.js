@@ -115,8 +115,19 @@ App.Views.NewProjectForm = Backbone.View.extend({
         id = App.projects.length;
 
     // TODO: tell user to fill in title and desc
-    if (!title || title === "click here to enter a new title") return;
-    if (!description || description === "enter the project's description here") return;
+    if (!title || title === "click here to enter a new title") {
+      $('.newTitle').addClass('pinkBackground');
+      return;
+    } else {
+      $('.newTitle').removeClass('pinkBackground');
+    }
+
+    if (!description || description === "enter the project&#x27;s description here") {
+      $('.description').addClass('pinkBackground');
+      return;
+    } else {
+      $('.newTitle').removeClass('pinkBackground');
+    }
 
     // TODO: check URLs
     //var urlRegex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
