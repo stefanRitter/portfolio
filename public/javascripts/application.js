@@ -21,12 +21,13 @@ var App = new (Backbone.View.extend({
   delayClasses: ['delay1', 'delay2', 'delay3', 'delay4'],
 
   events: { 'click': function() {
-    if (App.project) {
-      // if user is making a new project stay in form
-      if(App.project.model.get('id') == 'X') return;
-    }
-    App.router.navigate('portfolio', {trigger: true});
-  }},
+            if (App.project) {
+              // if user is making a new project stay in form
+              if(App.project.model.get('id') == 'X') return;
+            }
+            App.router.navigate('portfolio', {trigger: true});
+          }
+  },
 
   start: function() {
     // get project list from server
@@ -36,6 +37,10 @@ var App = new (Backbone.View.extend({
         $('.loading').css('display', 'none');
         setTimeout(function() { $('.mainFooter').addClass('fadeIn'); }, 2400);
         Backbone.history.start({ pushState: true });
+
+        $(window).on('resize', function() {
+          App.Views.ProjectTile.prototype.resizeAll();
+        });
       },
       error: function(err){ console.log("ERROR: loading projects"); console.log(err);}
     });
@@ -66,19 +71,19 @@ App.projects = new App.Models.Projects();
 // *********************************************************************************************************** VIEWS
 App.Views.NewProjectForm = Backbone.View.extend({
   template: _.template( '<form class="newProjectForm">' +
-                          '<input type="text" name=title value="<%= title %>" class="newTitle"/>' +
+                          '<input type="text" name="title" value="<%= title %>" class="newTitle"/>' +
 
                           '<div class="gallery"><div class="currentImage">' +
                             "Drag images into this area to upload (not implemented yet)" +
                           '</div><div class="thumbnails"></div></div>' +
 
                           '<div class="description">' +
-                            '<textarea class="descField" name=description><%= description %></textarea>' +
+                            '<textarea class="descField" name="description"><%= description %></textarea>' +
                           '</div>' +
 
                           '<div class="link">' +
-                            '<input type="text" name=link value="<%= link %>" /> | ' +
-                            '<input type="text" name=animation value="<%= animation %>" />' +
+                            '<input type="text" name="link" value="<%= link %>" /> | ' +
+                            '<input type="text" name="animation" value="<%= animation %>" />' +
                           '</div>' +
 
                           '<input type="button" name="save" value="Save"/><input type="button"  name="cancel" value="Cancel"/>' +
@@ -114,7 +119,7 @@ App.Views.NewProjectForm = Backbone.View.extend({
         animation = _.escape($('input[name=animation]').val()),
         id = App.projects.length;
 
-    // TODO: tell user to fill in title and desc
+    // highlight missing fields
     if (!title || title === "click here to enter a new title") {
       $('.newTitle').addClass('pinkBackground');
       return;
@@ -143,7 +148,6 @@ App.Views.NewProjectForm = Backbone.View.extend({
     App.projects.add(newProj);
 
     setTimeout( function() {
-
       // TODO: HTTP.POST
       // newProj.save();
       App.router.navigate('portfolio', {trigger: true});
@@ -298,19 +302,28 @@ App.Views.ProjectTile = Backbone.View.extend({
     // render view when model is changed
     this.listenTo(this.model, 'change', this.render);
 
+    this.el.id = this.model.get('id');
+
     this.$el.addClass(App.delayClasses[Math.floor(Math.random()*4)]);
     this.$el.addClass(App.moveClasses[Math.floor(Math.random()*4)]);
+  },
 
-    this.el.id = this.model.get('id');
+  resize: function(el) {
+    var maxWidth = window.innerWidth - window.innerWidth/10,
+        percentage = (window.innerWidth <= 800) ? 47 : 22.5;
+    el.style.height = maxWidth/100 * percentage + 'px';
+  },
+
+  resizeAll: function() {
+    var that = this;
+    $('.projectTile').each(function(index) {
+      that.resize(this);
+    });
   },
 
   render: function() {
     this.$el.html( this.template( this.model.toJSON() ) );
-
-    var maxWidth = window.innerWidth - window.innerWidth/10,
-        percentage = (window.innerWidth <= 800) ? 47 : 22.5;
-    this.el.style.height = maxWidth/100 * percentage + 'px';
-
+    this.resize(this.el);
     return this; // method chaining
   },
 
