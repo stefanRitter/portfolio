@@ -5,8 +5,9 @@
  * 
  *
  */
-
 (function() {
+
+
 // *********************************************************************************************************** APP
 var App = new (Backbone.View.extend({
   firstLoad: true,
@@ -53,7 +54,7 @@ var App = new (Backbone.View.extend({
     $('.moveCenter').removeClass('moveCenter');
 
     // wait for end of anim then activate scrolling
-    setTimeout(function() { $('body').css('overflow-y', 'auto'); }, 2300);
+    // setTimeout(function() { $('body').css('overflow-y', 'auto'); }, 2300);
   }
 }))({el: document.body});
 
@@ -134,10 +135,10 @@ App.Views.NewProjectForm = Backbone.View.extend({
       $('.newTitle').removeClass('pinkBackground');
     }
 
-    // TODO: check URLs
-    //var urlRegex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
-    //if (! link.match(urlRegex)) link = '';
-    //if (! animation.match(urlRegex)) animation = '';
+    // validate URL
+    var urlRegex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+    if (! urlRegex.test(link)) { link = ''; }
+    if (! urlRegex.test(animation)) { animation = ''; }
 
     var newProj = new App.Models.Project();
     newProj.set({
@@ -426,5 +427,6 @@ App.router = new (Backbone.Router.extend({
 $(function() {
   App.start();
 });
+
 
 }).call(this);
