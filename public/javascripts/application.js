@@ -6,7 +6,7 @@
  *
  */
 
-
+(function() {
 // *********************************************************************************************************** APP
 var App = new (Backbone.View.extend({
   firstLoad: true,
@@ -426,3 +426,5 @@ App.router = new (Backbone.Router.extend({
 $(function() {
   App.start();
 });
+
+}).call(this);
