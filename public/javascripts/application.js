@@ -71,24 +71,7 @@ App.projects = new App.Models.Projects();
 
 // *********************************************************************************************************** VIEWS
 App.Views.NewProjectForm = Backbone.View.extend({
-  template: _.template( '<form class="newProjectForm">' +
-                          '<input type="text" name="title" value="<%= title %>" class="newTitle"/>' +
-
-                          '<div class="gallery"><div class="currentImage">' +
-                            "Drag images into this area to upload (not implemented yet)" +
-                          '</div><div class="thumbnails"></div></div>' +
-
-                          '<div class="description">' +
-                            '<textarea class="descField" name="description"><%= description %></textarea>' +
-                          '</div>' +
-
-                          '<div class="link">' +
-                            '<input type="text" name="link" value="<%= link %>" /> | ' +
-                            '<input type="text" name="animation" value="<%= animation %>" />' +
-                          '</div>' +
-
-                          '<input type="button" name="save" value="Save"/><input type="button"  name="cancel" value="Cancel"/>' +
-                        '</form>'),
+  template: _.template( $('#NewProjectView').html() ),
 
   render: function(){
     this.$el.html(this.template(this.model.attributes));
@@ -164,18 +147,7 @@ App.Views.NewProjectForm = Backbone.View.extend({
 
 
 App.Views.Project = Backbone.View.extend({
-  template: _.template( '<h2><%= title %></h2>' +
-                        '<div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>' +
-
-                        '<div class="description"><div class="textDesc">' +
-                          '<%= description %></div>' +
-                        '</div>' +
-
-                        '<% if (link) { %>' +
-                          '<div class="link"><a href="<%= link %>">more information</a>' +
-                          '<% if (animation) { %> | <a href="<%= animation %>">view animation</a><% } %>' +
-                          '</div>' +
-                        '<% } %>'),
+  template: _.template( $('#ProjectView').html() ),
 
   events: { 'click': function(e) { e.stopPropagation(); }},
 
@@ -291,11 +263,7 @@ App.Views.Project = Backbone.View.extend({
 App.Views.ProjectTile = Backbone.View.extend({
   className: 'projectTile',
 
-  template: _.template('<div class="rotate-crop">' +
-                          '<div class="rotate-back">' +
-                            '<img src="<%= titleImage %>" />' +
-                          '</div>' +
-                        '</div>'),
+  template: _.template( $('#ProjectTileView').html() ),
 
   events: { 'click': 'onClick' },
 
