@@ -161,7 +161,7 @@ App.Views.Project = Backbone.View.extend({
     var gallery = this.model.get('gallery');
     for (var i = 0, len = gallery.length; i < len; i++) {
       this.images[i] = new Image();
-      this.images[i].src = '../' + gallery[i];
+      this.images[i].src = gallery[i];
       this.images[i].onclick = this.switchImage;
     }
   },
