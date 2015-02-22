@@ -1,98 +1,110 @@
-!!!5
-html(lang="en")
-  head
-    meta(charset='utf-8')
+<!DOCTYPE  html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
 
-    //
-      | *
-      | *
-      | * Hi there, have a look at my source files here:
-      | * https://github.com/stefanRitter/portfolio
-      | *
-      | *
+  <!--
+    | *
+    | *
+    | * Hi there, have a look at my source files here:
+    | * https://github.com/stefanRitter/portfolio
+    | *
+    | *
+  -->
 
-    title Portfolio by Stefan Ritter
+  <title>Portfolio by Stefan Ritter</title>
 
-    meta(name='description',content='Portfolio by Stefan Ritter')
-    meta(name='author',content='Stefan Ritter')
-    meta(name='viewport',content='width=device-width, initial-scale=1.0')
+  <meta name='description' content='Portfolio by Stefan Ritter'>
+  <meta name='author' content='Stefan Ritter'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-    link(rel='author',href='https://plus.google.com/115904556340885582567?rel=author')
-    link(href='http://fonts.googleapis.com/css?family=Oxygen+Mono',rel='stylesheet',type='text/css')
-    link(href='../stylesheets/portfolio.css',rel='stylesheet',type='text/css')
-
-
-    //- templates
-    script#ProjectView(type='text/template')
-      | <h2><%= title %></h2>
-      | <div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>
-      | 
-      | <div class="description"><div class="textDesc">
-      |   <%= description %></div>
-      | </div>
-      | 
-      | <% if (link) { %>
-      |   <div class="link"><a href="<%= link %>">more information</a>
-      |   <% if (animation) { %> | <a href="<%= animation %>">view animation</a><% } %>
-      |   </div>
-      | <% } %>
-
-    script#ProjectTileView(type='text/template')
-      | <div class="rotate-crop">
-      |   <div class="rotate-back">
-      |     <img src="<%= titleImage %>" />
-      |   </div>
-      | </div>
-
-    script#NewProjectView(type='text/template')
-      | <form class="newProjectForm">
-      |   <input type="text" name="title" value="<%= title %>" class="newTitle"/>
-      | 
-      |   <div class="gallery"><div class="currentImage">
-      |     Drag images into this area to upload (not implemented yet)
-      |   </div><div class="thumbnails"></div></div>
-      | 
-      |   <div class="description">
-      |     <textarea class="descField" name="description"><%= description %></textarea>
-      |   </div>
-      | 
-      |   <div class="link">
-      |     <input type="text" name="link" value="<%= link %>" /> | 
-      |     <input type="text" name="animation" value="<%= animation %>" />
-      |   </div>
-      | 
-      |   <input type="button" name="save" value="Save"/><input type="button"  name="cancel" value="Cancel"/>
-      | </form>
+  <link rel='author' href='https://plus.google.com/115904556340885582567?rel=author'>
+  <link href='http://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
+  <link href='/stylesheets/portfolio.css' rel='stylesheet' type='text/css'>
 
 
-  body
-    div.loading
-      img(src="../images/loading.gif",alt="loading...")
+  <!-- templates -->
+  <script id="ProjectView" type='text/template'>
+    <h2><%= title %></h2>
+    <div class="gallery"><div class="currentImage"></div><div class="thumbnails"></div></div>
+     
+    <div class="description">
+      <div class="textDesc">
+        <%= description %>
+      </div>
+    </div>
+    
+    <% if (link) { %>
+      <div class="link">
+        <a href="<%= link %>">more information</a>
+        <% if (animation) { %> | <a href="<%= animation %>">view animation</a><% } %>
+      </div>
+    <% } %>
+  </script>
 
-    div.centerVertical
-      div#app
+  <script id="ProjectTileView" type='text/template'>
+    <div class="rotate-crop">
+      <div class="rotate-back">
+        <img src="<%= titleImage %>" />
+      </div>
+    </div>
+  </script>
+  
+  <script id="NewProjectView" type='text/template'>
+    <form class="newProjectForm">
+      <input type="text" name="title" value="<%= title %>" class="newTitle"/>
+    
+      <div class="gallery"><div class="currentImage">
+        Drag images into this area to upload
+      </div><div class="thumbnails"></div></div>
+    
+      <div class="description">
+        <textarea class="descField" name="description"><%= description %></textarea>
+      </div>
+    
+      <div class="link">
+        <input type="text" name="link" value="<%= link %>" /> | 
+        <input type="text" name="animation" value="<%= animation %>" />
+      </div>
+    
+      <input type="button" name="save" value="Save"/><input type="button"  name="cancel" value="Cancel"/>
+    </form>
+  </script>
+</head>
 
-      footer.mainFooter
-        p
-          | Portfolio is a 
-          a(href='http://backbonejs.org/') backbone.js
-          |  web app running on 
-          a(href='http://nodejs.org/') node.js
-          |  + 
-          a(href='http://expressjs.com/') express.js
-          | , by 
-          a(href='https://plus.google.com/115904556340885582567?rel=author') Stefan Ritter
+<body>
+    <div class="loading">
+      <img src="/images/loading.gif" alt="loading...">
+    </div>
 
-    style#dynamicStyle(type='text/css')
+    <div class="centerVertical">
+      <div id="app"></div>
 
-    script(src='../javascripts/jquery-1.9.1.min.js')
-    script(src='../javascripts/underscore-min.js')
-    script(src='../javascripts/backbone-min.js')
-    script(src='../javascripts/application.js')
-    script
+      <footer class="mainFooter">
+        <p>
+          Portfolio is a 
+          <a href='http://backbonejs.org/'>backbone.js</a>
+          web app, by 
+          <a href='http://stefanritter.com'>Stefan Ritter</a>
+        </p>
+      </footer>
+    </div>
+
+    <style id="dynamicStyle" type='text/css'>
+    </style>
+
+    <script src='/javascripts/json2.js'></script>
+    <script src='/javascripts/jquery-1.9.1.min.js'></script>
+    <script src='/javascripts/underscore-min.js'></script>
+    <script src='/javascripts/backbone-min.js'></script>
+    <script src='/javascripts/application.js'></script>
+    <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-40811749-1', 'herokuapp.com');
+      ga('create', 'UA-37404240-1', 'auto');
       ga('send', 'pageview');
+    </script>
+</body>
+</html>

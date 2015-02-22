@@ -37,7 +37,7 @@ var App = new (Backbone.View.extend({
       success: function() {
         $('.loading').css('display', 'none');
         setTimeout(function() { $('.mainFooter').addClass('fadeIn'); }, 2400);
-        Backbone.history.start({ pushState: true });
+        Backbone.history.start();
 
         $(window).on('resize', function() {
           App.Views.ProjectTile.prototype.resizeAll();
@@ -167,7 +167,6 @@ App.Views.Project = Backbone.View.extend({
   },
 
   render: function() {
-
     $('html, body').animate({ scrollTop: 0 }, 'slow');
 
     if (this.model.get('id') == 'X') {
@@ -182,8 +181,8 @@ App.Views.Project = Backbone.View.extend({
       }, 2300);
 
     } else {
-
-      var proj = $( this.template( this.model.toJSON() ));
+      var rendered = this.template( this.model.toJSON() );
+      var proj = $('<div>'+rendered+'</div>');
 
       // stop propagation
       $(proj).not('h2').on('click', function(e) { e.stopPropagation(); });
