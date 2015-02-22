@@ -63,7 +63,7 @@ var App = new (Backbone.View.extend({
 App.Models.Project = Backbone.Model.extend({});
 
 App.Models.Projects = Backbone.Collection.extend({
-  url: '../javascripts/projects.json',
+  url: 'javascripts/projects.json',
   model: App.Models.Project
 });
 App.projects = new App.Models.Projects();
