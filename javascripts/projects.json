@@ -25,8 +25,5 @@
 
   {"title": "Lucid Haze", "titleImage": "images/lucid_title.jpg", "id": "6", "link": "",
    "gallery": ["images/lucid_01.jpg", "images/lucid_02.jpg", "images/lucid_03.jpg", "images/lucid_04.jpg"], "animation": "",
-   "description": "Contemporary space poetics.\nGoal is a choreographed spacial experience. Moving through the installation opens up discussions on the dichotomy of ornament and structure, transitions from inside to outside, and the interweaving of two material languages."},
-
-  {"title": "click here to enter a new title", "titleImage": "images/new_title.png", "id": "X", "link": "URL for more info (opt)",
-   "gallery": [], "animation": "URL to an animation (opt)", "description": "enter the project's description here"}
+   "description": "Contemporary space poetics.\nGoal is a choreographed spacial experience. Moving through the installation opens up discussions on the dichotomy of ornament and structure, transitions from inside to outside, and the interweaving of two material languages."}
 ]
